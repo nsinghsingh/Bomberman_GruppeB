@@ -115,7 +115,7 @@
             <properties>
               <enabled value="true"/>
               <font name="Verdana" size="14"/>
-              <text value="Time's up! Congrats _username_!"/>
+              <text value="Congrats _username_!"/>
             </properties>
           </component>
           <vspacer id="626a8">
