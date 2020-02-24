@@ -2,6 +2,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Tile {
 
@@ -16,8 +17,17 @@ public class Tile {
         setSolid(false);
         setDestroyable(false);
         setImage("");
-        setTile(new JPanel());
+        JPanel background = new JPanel();
+        background.setBackground(Color.GREEN);
+        setTile(background);
     }
 
-    public void uponDestroyed(){}
+    public Tile(Tile tile){
+        setSolid(tile.isSolid());
+        setDestroyable(tile.isDestroyable());
+        setImage(tile.getImage());
+        JPanel background = new JPanel();
+        background.setBackground(tile.getTile().getBackground());
+        setTile(background);
+    }
 }

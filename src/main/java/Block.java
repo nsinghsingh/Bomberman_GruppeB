@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class Block extends Tile{
 
@@ -6,23 +7,19 @@ public class Block extends Tile{
         super();
         if(isDestroyable){
             setSolid(true);
-            setDestroyable(false);
+            setDestroyable(true);
             setImage("");
-            setTile(new JPanel());
+            JPanel background = new JPanel();
+            background.setBackground(new Color(150,75,0));
+            setTile(background);
         }
         else{
             setSolid(true);
-            setDestroyable(true);
+            setDestroyable(false);
             setImage("");
-            setTile(new JPanel());
+            JPanel background = new JPanel();
+            background.setBackground(Color.GRAY);
+            setTile(background);
         }
-    }
-
-    @Override
-    public void uponDestroyed() {
-        setSolid(false);
-        setDestroyable(false);
-        setImage("");
-        setTile(new JPanel());
     }
 }

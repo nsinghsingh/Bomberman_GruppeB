@@ -31,8 +31,5 @@ public class Bomb extends Tile{
         setLabyrinth(labyrinth);
     }
 
-    @Override
-    public void uponDestroyed() {
-        //TODO figure out how to summon the explosion
-    }
+    //TODO figure out how to summon the explosion
 }

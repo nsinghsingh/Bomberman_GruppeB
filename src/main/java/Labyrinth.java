@@ -1,7 +1,9 @@
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 
 public class Labyrinth {
@@ -21,59 +23,69 @@ public class Labyrinth {
     private JPanel P2Icon;
     private JPanel P1Icon;
 
-    @Getter @Setter private Tile[][] tiles;
+    @Getter @Setter private Tile[][] tiles = new Tile[Y_LENGTH][X_LENGTH];
     @Getter @Setter private HashMap<Integer, Tile> tileTypes = new HashMap<Integer, Tile>();
+    final static int Y_LENGTH = 12;
+    final static int X_LENGTH = 22;
 
-    public Labyrinth(int xLength, int yLength){
-        tiles = new Tile[xLength][yLength];
+    public Labyrinth(){
+        GridLayout playingField = new GridLayout(Y_LENGTH, X_LENGTH, 5, 5);
+        GameRender.setLayout(playingField);
         tileTypes.put(0, new Tile());
         tileTypes.put(1, new Block(false));
         tileTypes.put(2, new Block(true));
     }
 
-    public Labyrinth(){
-        this(22, 12);
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("FrameDemo");
+        Labyrinth labyrinth = new Labyrinth();
+        int[][] map = new int[12][22];
+        map[0] = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+        map[11] = map[0];
+        for (int i = 0; i < map.length; i++) {
+            map[i][0] = 1;
+            map[i][21] = 1;
+        }
+        labyrinth.loadMap(map);
+        frame.getContentPane().add(labyrinth.Labyrinth);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
 
-    public boolean checkMap(){
-        int xLength = getTiles().length;
-        int yLength = getTiles()[0].length;
-        if (getTiles()[0][0].isSolid()){ return false; }
-        if (getTiles()[0][yLength-1].isSolid()){ return false; }
-        if (getTiles()[xLength-1][0].isSolid()){ return false; }
-        if (getTiles()[xLength-1][yLength-1].isSolid()){ return false; }
-        for (int i = 0; i < xLength; i++) {
-            for (int j = 0; j < yLength; j++) {
-                int counter = 0;
-                for (int k = 0; k < 9; k++) {
-                    try {
-                        Tile currentTile = getTiles()[i-1 + k / 3][j-1 + k % 3];
-                        if(!currentTile.isDestroyable() && currentTile.isSolid()){
-                            counter++;
-                        }
-                    }
-                    catch(Exception ignored) {}
-                    if(counter > 4){
-                        return false;
-                    }
+    public void loadMap(int[][] map){
+        if(loadArray(map)){
+            for (Tile[] column : getTiles()) {
+                for (Tile tile : column) {
+                    GameRender.add(tile.getTile());
                 }
             }
         }
-        return true;
+        else{
+            //TODO Add error message
+        }
     }
 
-    public boolean loadMap(int[][] map){
+    private boolean loadArray(int[][] map){
         if (getTiles().length == map.length && getTiles()[0].length == map[0].length){
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[i].length; j++) {
-                    getTiles()[i][j] = getTileTypes().get(map[i][j]);
+                    Tile copy = getTileTypes().get(map[i][j]);
+                    getTiles()[i][j] = new Tile(copy);
                 }
             }
-            //TODO Add tiles to labyrinth
-            return true;
+            return checkMap();
         }
         else {
             return false;
         }
+    }
+
+    private boolean checkMap(){
+        if (getTiles()[1][1].isSolid()){ return false; }
+        if (getTiles()[1][X_LENGTH-2].isSolid()){ return false; }
+        if (getTiles()[Y_LENGTH-2][1].isSolid()){ return false; }
+        if (getTiles()[Y_LENGTH-2][X_LENGTH-2].isSolid()){ return false; }
+        return true;
     }
 }
