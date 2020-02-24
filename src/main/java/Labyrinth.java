@@ -22,6 +22,7 @@ public class Labyrinth {
     private JPanel P3Icon;
     private JPanel P2Icon;
     private JPanel P1Icon;
+    private JLabel Clock;
 
     @Getter @Setter private Tile[][] tiles = new Tile[Y_LENGTH][X_LENGTH];
     @Getter @Setter private HashMap<Integer, Tile> tileTypes = new HashMap<Integer, Tile>();
@@ -88,4 +89,5 @@ public class Labyrinth {
         if (getTiles()[Y_LENGTH-2][X_LENGTH-2].isSolid()){ return false; }
         return true;
     }
+
 }
