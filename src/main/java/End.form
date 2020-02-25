@@ -60,7 +60,17 @@
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <component id="ea8d6" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <icon value="icons/black-player.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
               </grid>
               <component id="78f87" class="javax.swing.JLabel" binding="Player1Name">
                 <constraints>
@@ -147,7 +157,17 @@
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <component id="9be6d" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <icon value="icons/red-player.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
               </grid>
               <component id="6ba9b" class="javax.swing.JLabel" binding="Player2Name">
                 <constraints>
@@ -215,7 +235,17 @@
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <component id="c7ecd" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <icon value="icons/blue-player.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
               </grid>
               <component id="6e0b7" class="javax.swing.JLabel" binding="Player3Name">
                 <constraints>
@@ -283,7 +313,17 @@
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <component id="f36b0" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <icon value="icons/white-player.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
               </grid>
               <component id="bb9d7" class="javax.swing.JLabel" binding="Player4Name">
                 <constraints>
