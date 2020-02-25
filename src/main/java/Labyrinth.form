@@ -29,6 +29,7 @@
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Verdana"/>
               <text value="0:00"/>
             </properties>
           </component>
@@ -85,6 +86,7 @@
               <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Verdana"/>
               <text value="0"/>
             </properties>
           </component>
@@ -112,6 +114,7 @@
               <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Verdana"/>
               <text value="0"/>
             </properties>
           </component>
@@ -141,6 +144,7 @@
               <grid row="0" column="11" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Verdana"/>
               <text value="0"/>
             </properties>
           </component>
@@ -168,6 +172,7 @@
               <grid row="0" column="14" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Verdana"/>
               <text value="0"/>
             </properties>
           </component>
@@ -235,9 +240,12 @@
           </hspacer>
           <component id="943a3" class="javax.swing.JLabel" binding="TieScore">
             <constraints>
-              <grid row="0" column="17" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="17" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="26" height="16"/>
+              </grid>
             </constraints>
             <properties>
+              <font name="Verdana"/>
               <text value="0"/>
               <verifyInputWhenFocusTarget value="true"/>
             </properties>
