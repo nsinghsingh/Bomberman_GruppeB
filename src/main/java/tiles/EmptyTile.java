@@ -3,7 +3,7 @@ package tiles;
 import javax.swing.*;
 import java.awt.*;
 
-public class EmptyTile extends BasicTile implements Tile{
+public class EmptyTile extends BasicTile{
 
     public EmptyTile(){
         setSolid(false);

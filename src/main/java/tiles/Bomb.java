@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import javax.swing.*;
 
-public class Bomb extends BasicTile implements Tile{
+public class Bomb extends BasicTile{
 
     @Getter @Setter private int timer;
     @Getter @Setter private int radius;

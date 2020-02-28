@@ -31,8 +31,8 @@ public class Labyrinth {
     private JLabel P3;
     private JLabel P2;
 
-    @Getter @Setter private Tile[][] tiles = new Tile[Y_LENGTH][X_LENGTH];
-    @Getter @Setter private HashMap<Integer, Tile> tileTypes = new HashMap<Integer, Tile>();
+    @Getter @Setter private BasicTile[][] tiles = new BasicTile[Y_LENGTH][X_LENGTH];
+    @Getter @Setter private HashMap<Integer, BasicTile> tileTypes = new HashMap<Integer, BasicTile>();
     final static int Y_LENGTH = 12;
     final static int X_LENGTH = 22;
 
@@ -62,8 +62,8 @@ public class Labyrinth {
 
     public void loadMap(int[][] map){
         if(loadArray(map)){
-            for (Tile[] column : getTiles()) {
-                for (Tile tile : column) {
+            for (BasicTile[] column : getTiles()) {
+                for (BasicTile tile : column) {
                     GameRender.add(tile.getTile());
                 }
             }
@@ -77,9 +77,8 @@ public class Labyrinth {
         if (getTiles().length == map.length && getTiles()[0].length == map[0].length){
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[i].length; j++) {
-                    Tile copy = getTileTypes().get(map[i][j]);
-                    getTiles()[i][j] = new EmptyTile();
-                    getTiles()[i][j].clone(copy);
+                    BasicTile copy = getTileTypes().get(map[i][j]);
+                    getTiles()[i][j] = copy.clone();
                 }
             }
             return checkMap();

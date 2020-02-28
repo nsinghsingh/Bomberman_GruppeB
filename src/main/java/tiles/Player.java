@@ -1,10 +1,8 @@
 package tiles;
 
-import tiles.EmptyTile;
-
 import javax.swing.*;
 
-public class Player extends BasicTile implements Tile{
+public class Player extends BasicTile{
 
     public Player(){
         super();

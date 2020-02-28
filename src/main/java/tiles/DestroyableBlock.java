@@ -3,7 +3,7 @@ package tiles;
 import javax.swing.*;
 import java.awt.*;
 
-public class DestroyableBlock extends BasicTile implements Tile{
+public class DestroyableBlock extends BasicTile{
 
     public DestroyableBlock() {
         setSolid(true);
