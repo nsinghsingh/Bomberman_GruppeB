@@ -2,7 +2,7 @@ package server;
 
 import client.clientMain;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -22,19 +22,31 @@ public class serverMain {
             e.printStackTrace();
 
         }
+
+
         while (true) {
             if (currPlayercount < 4) {
                 try {
                     Socket newClient = serverSocket.accept();
                     clientSocket.add(newClient);
-                    currPlayercount += 1;
+                    currPlayercount++;
                     System.out.println(clientSocket.size());
                 } catch (IOException e) {
                     System.out.println("I/O error: " + e);
                 }
             }
-            //TODO: Share data here!
+            //Loops trough all the Clients !! NOTE !! Currently not working ! only prints out the last object that created
+            for (Socket clientsSocket : clientSocket
+            ) {
+                try {
+                    DataInputStream dIn = new DataInputStream(clientsSocket.getInputStream());
+                    System.out.println(dIn.readUTF() + " " + clientsSocket);
+                } catch (Exception ignore) {
+                }
+
+            }
 
         }
     }
+
 }
