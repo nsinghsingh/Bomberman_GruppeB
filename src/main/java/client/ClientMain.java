@@ -10,27 +10,21 @@ public class ClientMain extends Thread{
 
     public ClientMain() {
         System.out.println("Client created");
-        try{
-            socket = new Socket(ip,port);
+        try {
+            socket = new Socket(ip, port);
             start();
-        }
-        catch (Exception ignored){}
+        } catch (Exception ignored){}
     }
 
     public void run() {
-        InputStream inp = null;
-        BufferedReader brinp = null;
-        DataOutputStream out = null;
         try {
-            inp = socket.getInputStream();
-            brinp = new BufferedReader(new InputStreamReader(inp));
-            out = new DataOutputStream(socket.getOutputStream());
-        } catch (IOException e) {
-            return;
+            DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
+            dOut.writeUTF("This is the first type of message.");
+            dOut.flush();
+        } catch (Exception ignore) {
         }
-        while (true) {
-           //TODO: Share data here!
 
-        }
+
     }
+
 }
