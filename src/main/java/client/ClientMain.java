@@ -3,12 +3,12 @@ package client;
 import java.io.*;
 import java.net.Socket;
 
-public class clientMain extends Thread{
+public class ClientMain extends Thread{
     protected Socket socket;
     String ip = "127.0.0.1"; // localhost
     int port = 1111;
 
-    public clientMain() {
+    public ClientMain() {
         System.out.println("Client created");
         try{
             socket = new Socket(ip,port);

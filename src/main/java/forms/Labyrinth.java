@@ -1,5 +1,8 @@
+package forms;
+
 import lombok.Getter;
 import lombok.Setter;
+import tiles.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,11 +39,10 @@ public class Labyrinth {
     public Labyrinth(){
         GridLayout playingField = new GridLayout(Y_LENGTH, X_LENGTH, 5, 5);
         GameRender.setLayout(playingField);
-        tileTypes.put(0, new Tile());
-        tileTypes.put(1, new Block(false));
-        tileTypes.put(2, new Block(true));
+        tileTypes.put(0, new EmptyTile());
+        tileTypes.put(1, new UndestroyableBlock());
+        tileTypes.put(2, new DestroyableBlock());
     }
-
     public static void main(String[] args) {
         JFrame frame = new JFrame("FrameDemo");
         Labyrinth labyrinth = new Labyrinth();
@@ -71,12 +73,13 @@ public class Labyrinth {
         }
     }
 
-    boolean loadArray(int[][] map){
+    public boolean loadArray(int[][] map){
         if (getTiles().length == map.length && getTiles()[0].length == map[0].length){
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[i].length; j++) {
                     Tile copy = getTileTypes().get(map[i][j]);
-                    getTiles()[i][j] = new Tile(copy);
+                    getTiles()[i][j] = new EmptyTile();
+                    getTiles()[i][j].clone(copy);
                 }
             }
             return checkMap();
@@ -86,7 +89,7 @@ public class Labyrinth {
         }
     }
 
-    boolean checkMap(){
+    public boolean checkMap(){
         if (getTiles()[1][1].isSolid()){ return false; }
         if (getTiles()[1][X_LENGTH-2].isSolid()){ return false; }
         if (getTiles()[Y_LENGTH-2][1].isSolid()){ return false; }

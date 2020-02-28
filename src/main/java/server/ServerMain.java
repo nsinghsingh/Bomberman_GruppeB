@@ -1,13 +1,11 @@
 package server;
 
-import client.clientMain;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class serverMain {
+public class ServerMain {
 
     static final int PORT = 1111;
     static public int currPlayercount;
@@ -27,7 +25,7 @@ public class serverMain {
                 try {
                     Socket newClient = serverSocket.accept();
                     clientSocket.add(newClient);
-                    currPlayercount += 1;
+                    currPlayercount ++;
                     System.out.println(clientSocket.size());
                 } catch (IOException e) {
                     System.out.println("I/O error: " + e);

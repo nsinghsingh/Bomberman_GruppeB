@@ -1,3 +1,5 @@
+package forms;
+
 import javax.swing.*;
 
 public class End {

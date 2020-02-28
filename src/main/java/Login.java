@@ -1,11 +1,8 @@
-import client.clientMain;
-
-import java.io.IOException;
-import java.net.Socket;
+import client.ClientMain;
 
 public class Login {
 
     public static void main(String[] args){
-        clientMain client =  new clientMain();
+        ClientMain client =  new ClientMain();
     }
 }
