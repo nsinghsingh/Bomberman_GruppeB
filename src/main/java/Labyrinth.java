@@ -1,4 +1,3 @@
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +7,7 @@ import java.util.HashMap;
 
 public class Labyrinth {
     private JPanel Labyrinth;
-    private JPanel GameRender;
+    @Getter private JPanel GameRender;
     private JPanel GameInfo;
     private JLabel Time;
     private JPanel ClockIcon;
@@ -66,7 +65,7 @@ public class Labyrinth {
         }
     }
 
-    private boolean loadArray(int[][] map){
+    boolean loadArray(int[][] map){
         if (getTiles().length == map.length && getTiles()[0].length == map[0].length){
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[i].length; j++) {
@@ -81,7 +80,7 @@ public class Labyrinth {
         }
     }
 
-    private boolean checkMap(){
+    boolean checkMap(){
         if (getTiles()[1][1].isSolid()){ return false; }
         if (getTiles()[1][X_LENGTH-2].isSolid()){ return false; }
         if (getTiles()[Y_LENGTH-2][1].isSolid()){ return false; }
