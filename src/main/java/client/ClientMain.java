@@ -7,7 +7,9 @@ import java.net.Socket;
 public class ClientMain extends Thread {
     protected Socket socket;
     String ip = "127.0.0.1"; // localhost
-    int port = 1111;
+    int port = 9876;
+    DataOutputStream dOut = null;
+    DataInputStream dIn = null;
 
     public ClientMain() {
         System.out.println("Client created");
@@ -19,33 +21,31 @@ public class ClientMain extends Thread {
     }
 
     public void run() {
-        DataOutputStream dOut = null;
-        DataInputStream dIn = null;
-        try {
-             dOut = new DataOutputStream(socket.getOutputStream());
-             dIn = new DataInputStream(socket.getInputStream());
-        }catch (Exception ignore){}
-
         while (true) {
-            //Sendet Die Nachricht
-
-            try {
-
-                dOut.writeUTF("I'm the Client");
-                dOut.flush();
-
-            } catch (Exception ignore) {
-                System.out.println("lol");
-            }
-
-            //Empfängt Nachricht
-            try {
-
-                System.out.println(dIn.readUTF() + " ");
-
-            } catch (Exception ignore) {
-
-            }
+        //Looping Thread
+        sendMessage(socket.toString());
         }
+    }
+
+    public void sendMessage(String message) {
+
+        //sends a message to the server
+        try {
+            dOut = new DataOutputStream(socket.getOutputStream());
+            dOut.writeUTF(message);
+            dOut.flush();
+
+        } catch (Exception ignore) {
+        }
+
+    }
+
+    public String receiveMessage() {
+
+        //receives a message from the server
+        try {
+            dIn = new DataInputStream(socket.getInputStream());
+            return dIn.readUTF();
+        } catch (Exception ignore) {return null;}
     }
 }
