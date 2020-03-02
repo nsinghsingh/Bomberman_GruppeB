@@ -24,6 +24,7 @@ public class ServerMain {
         }
 
 
+
         while (true) {
             if (currPlayercount < 4) {
                 try {
@@ -35,12 +36,28 @@ public class ServerMain {
                     System.out.println("I/O error: " + e);
                 }
             }
-            //Loops trough all the Clients !! NOTE !! Currently not working ! only prints out the last object that created
+
+            //Empfängt die Nachricht
             for (Socket clientsSocket : clientSocket
             ) {
                 try {
                     DataInputStream dIn = new DataInputStream(clientsSocket.getInputStream());
                     System.out.println(dIn.readUTF() + " " + clientsSocket);
+
+                } catch (Exception ignore) {
+
+                }
+
+            }
+
+            //Sendet Nachricht
+            for (Socket clientsSocket : clientSocket
+            ) {
+                try {
+                    DataOutputStream dOut = new DataOutputStream(clientsSocket.getOutputStream());
+                    dOut.writeUTF("I'm the Server");
+                    dOut.flush();
+
                 } catch (Exception ignore) {
                 }
 
