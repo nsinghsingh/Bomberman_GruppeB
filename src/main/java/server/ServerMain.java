@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ServerMain {
 
-    static final int PORT = 9876;
+    static final int PORT = 986;
     static public int currPlayercount;
     static private DataInputStream dIn = null;
     static private DataOutputStream dOut = null;
@@ -26,7 +26,6 @@ public class ServerMain {
 
         }
 
-
         while (true) {
             if (currPlayercount < 4) {
                 try {
@@ -37,14 +36,15 @@ public class ServerMain {
                     System.out.println("failed To connet");
                 }
             }
+
             //loops after 4 players are connected.
             receiveMessage();
         }
     }
 
+    //sends a Message to all clients
     static public void sendMessage(String message) {
 
-        //sends a Message to all clients
         try {
             for (Socket clientSocket : clientSocketList
             ) {
@@ -56,19 +56,27 @@ public class ServerMain {
         }
     }
 
+    //receives Client messages
     static public void receiveMessage() {
-        //receives Client messages
         for (Socket clientSocket : clientSocketList
         ) {
-            System.out.println(clientSocket);
-            CompletableFuture.runAsync(() -> {
-                try {
-                    dIn = new DataInputStream(clientSocket.getInputStream());
-                    System.out.println(dIn.readUTF());
-                } catch (Exception ignore) {
+            //System.out.println(clientSocket);
+            try {
+                dIn = new DataInputStream(clientSocket.getInputStream());
+                while (dIn.available() > 0) {
+                    String k = dIn.readUTF();
+                    System.out.println(k + clientSocket);
+                    //send back to the client (Here would be a Method call to Validate stuff)
+                    sendMessage(k + clientSocket);
                 }
-            });
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
         }
+
 
     }
 }
