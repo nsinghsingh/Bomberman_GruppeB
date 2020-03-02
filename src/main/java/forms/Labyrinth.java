@@ -37,11 +37,12 @@ public class Labyrinth {
     @Getter @Setter private HashMap<Integer, BasicTile> tileTypes = new HashMap<>();
 
     public Labyrinth(){
-        GridLayout playingField = new GridLayout(Y_LENGTH, X_LENGTH, 5, 5);
+        GridLayout playingField = new GridLayout(Y_LENGTH, X_LENGTH, 0, 0);
         GameRender.setLayout(playingField);
         tileTypes.put(0, new EmptyTile());
         tileTypes.put(1, new UndestroyableBlock());
         tileTypes.put(2, new DestroyableBlock());
+        tileTypes.put(3, new Player(tiles));
     }
 
     public static void main(String[] args) {
@@ -50,6 +51,10 @@ public class Labyrinth {
         Labyrinth labyrinth = new Labyrinth();
         int[][] mapValues = new int[12][22];
         mapValues[0] = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+        mapValues[1][1] = 3;
+        mapValues[10][1] = 3;
+        mapValues[1][20] = 3;
+        mapValues[10][20] = 3;
         mapValues[11] = mapValues[0];
         for (int i = 0; i < mapValues.length; i++) {
             mapValues[i][0] = 1;
@@ -60,6 +65,8 @@ public class Labyrinth {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        Player player = (Player) labyrinth.getTiles()[1][1];
+        player.setDirection("s");
     }
 
     public void loadMap(int[][] mapValues){
@@ -91,10 +98,10 @@ public class Labyrinth {
     }
 
     public boolean checkMap(){
-        if (getTiles()[1][1].isSolid()){ return false; }
-        if (getTiles()[1][X_LENGTH-2].isSolid()){ return false; }
-        if (getTiles()[Y_LENGTH-2][1].isSolid()){ return false; }
-        if (getTiles()[Y_LENGTH-2][X_LENGTH-2].isSolid()){ return false; }
+        if (!(getTiles()[1][1] instanceof Player)){ return false; }
+        if (!(getTiles()[1][X_LENGTH-2] instanceof Player)){ return false; }
+        if (!(getTiles()[Y_LENGTH-2][1] instanceof Player)){ return false; }
+        if (!(getTiles()[Y_LENGTH-2][X_LENGTH-2] instanceof Player)){ return false; }
         return true;
     }
 
