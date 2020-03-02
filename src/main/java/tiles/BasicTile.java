@@ -15,14 +15,13 @@ public class BasicTile {
     @Getter @Setter private JPanel tile;
 
     public BasicTile clone() {
-        BasicTile tile = new BasicTile();
-        setSolid(tile.isSolid());
-        setDestroyable(tile.isDestroyable());
-        setImage(tile.getImage());
-        JPanel background = new JPanel();
-        background.setBackground(tile.getTile().getBackground());
-        setTile(background);
-        return tile;
+        BasicTile newTile = new BasicTile();
+        setSolid(isSolid());
+        setDestroyable(isDestroyable());
+        setImage(getImage());
+        newTile.setTile(new JPanel());
+        newTile.getTile().setBackground(getTile().getBackground());
+        return newTile;
     }
 
 }

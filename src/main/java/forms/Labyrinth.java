@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class Labyrinth {
     private JPanel Labyrinth;
-    @Getter private JPanel GameRender;
+    @Getter private JPanel GameRender; //Getter is needed for a test
     private JPanel GameInfo;
     private JLabel Time;
     private JPanel ClockIcon;
@@ -31,10 +31,10 @@ public class Labyrinth {
     private JLabel P3;
     private JLabel P2;
 
-    @Getter @Setter private BasicTile[][] tiles = new BasicTile[Y_LENGTH][X_LENGTH];
-    @Getter @Setter private HashMap<Integer, BasicTile> tileTypes = new HashMap<Integer, BasicTile>();
     final static int Y_LENGTH = 12;
     final static int X_LENGTH = 22;
+    @Getter @Setter private BasicTile[][] tiles = new BasicTile[Y_LENGTH][X_LENGTH];
+    @Getter @Setter private HashMap<Integer, BasicTile> tileTypes = new HashMap<>();
 
     public Labyrinth(){
         GridLayout playingField = new GridLayout(Y_LENGTH, X_LENGTH, 5, 5);
@@ -43,25 +43,27 @@ public class Labyrinth {
         tileTypes.put(1, new UndestroyableBlock());
         tileTypes.put(2, new DestroyableBlock());
     }
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("FrameDemo");
+        //javax.swing.SwingUtilities.invokeLater(Labyrinth::new);
         Labyrinth labyrinth = new Labyrinth();
-        int[][] map = new int[12][22];
-        map[0] = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-        map[11] = map[0];
-        for (int i = 0; i < map.length; i++) {
-            map[i][0] = 1;
-            map[i][21] = 1;
+        int[][] mapValues = new int[12][22];
+        mapValues[0] = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+        mapValues[11] = mapValues[0];
+        for (int i = 0; i < mapValues.length; i++) {
+            mapValues[i][0] = 1;
+            mapValues[i][21] = 1;
         }
-        labyrinth.loadMap(map);
+        labyrinth.loadMap(mapValues);
         frame.getContentPane().add(labyrinth.Labyrinth);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
 
-    public void loadMap(int[][] map){
-        if(loadArray(map)){
+    public void loadMap(int[][] mapValues){
+        if(loadArray(mapValues)){
             for (BasicTile[] column : getTiles()) {
                 for (BasicTile tile : column) {
                     GameRender.add(tile.getTile());
@@ -73,11 +75,11 @@ public class Labyrinth {
         }
     }
 
-    public boolean loadArray(int[][] map){
-        if (getTiles().length == map.length && getTiles()[0].length == map[0].length){
-            for (int i = 0; i < map.length; i++) {
-                for (int j = 0; j < map[i].length; j++) {
-                    BasicTile copy = getTileTypes().get(map[i][j]);
+    public boolean loadArray(int[][] mapValues){
+        if (getTiles().length == mapValues.length && getTiles()[0].length == mapValues[0].length){
+            for (int i = 0; i < mapValues.length; i++) {
+                for (int j = 0; j < mapValues[i].length; j++) {
+                    BasicTile copy = getTileTypes().get(mapValues[i][j]);
                     getTiles()[i][j] = copy.clone();
                 }
             }
