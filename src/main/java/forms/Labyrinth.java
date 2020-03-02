@@ -66,7 +66,7 @@ public class Labyrinth {
         if(loadArray(mapValues)){
             for (BasicTile[] column : getTiles()) {
                 for (BasicTile tile : column) {
-                    GameRender.add(tile.getTile());
+                    GameRender.add(tile);
                 }
             }
         }

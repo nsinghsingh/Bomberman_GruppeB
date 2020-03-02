@@ -4,8 +4,6 @@ import forms.Labyrinth;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.*;
-
 public class Bomb extends BasicTile{
 
     @Getter @Setter private int timer;
@@ -16,7 +14,6 @@ public class Bomb extends BasicTile{
         setSolid(true);
         setDestroyable(true);
         setImage("");
-        setTile(new JPanel());
     }
 
     public Bomb(Labyrinth labyrinth){

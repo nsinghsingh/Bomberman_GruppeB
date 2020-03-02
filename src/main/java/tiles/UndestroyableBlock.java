@@ -9,8 +9,6 @@ public class UndestroyableBlock extends BasicTile{
         setSolid(true);
         setDestroyable(false);
         setImage("");
-        JPanel background = new JPanel();
-        background.setBackground(Color.GRAY);
-        setTile(background);
+        setBackground(Color.GRAY);
     }
 }

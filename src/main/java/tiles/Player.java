@@ -14,7 +14,6 @@ public class Player extends BasicTile{
         setSolid(true);
         setDestroyable(true);
         setImage("");
-        setTile(new JPanel());
     }
 
     public void move(){}

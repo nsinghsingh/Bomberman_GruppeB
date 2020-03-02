@@ -1,6 +1,5 @@
 package tiles;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class EmptyTile extends BasicTile{
@@ -9,9 +8,7 @@ public class EmptyTile extends BasicTile{
         setSolid(false);
         setDestroyable(false);
         setImage("");
-        JPanel background = new JPanel();
-        background.setBackground(Color.GREEN);
-        setTile(background);
+        setBackground(Color.GREEN);
     }
 
 }
