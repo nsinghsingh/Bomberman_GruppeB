@@ -7,7 +7,7 @@ public class DestroyableBlock extends BasicTile{
     public DestroyableBlock() {
         setSolid(true);
         setDestroyable(true);
-        setImage("");
+        setImagePath("");
         setBackground(new Color(150, 75, 0));
     }
 }
