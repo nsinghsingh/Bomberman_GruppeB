@@ -8,7 +8,7 @@ public class EmptyTile extends BasicTile{
         setSolid(false);
         setDestroyable(false);
         setImagePath("");
-        setBackground(Color.GREEN);
+        setBackground(Color.green);
     }
 
 }

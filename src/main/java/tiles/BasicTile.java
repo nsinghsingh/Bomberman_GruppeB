@@ -16,9 +16,9 @@ public class BasicTile extends JPanel{
 
     public BasicTile clone() {
         BasicTile newTile = new BasicTile();
-        setSolid(isSolid());
-        setDestroyable(isDestroyable());
-        setImagePath(getImagePath());
+        newTile.setSolid(isSolid());
+        newTile.setDestroyable(isDestroyable());
+        newTile.setImagePath(getImagePath());
         newTile.setBackground(getBackground());
         return newTile;
     }
