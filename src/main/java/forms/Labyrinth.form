@@ -50,7 +50,7 @@
                 <properties>
                   <doubleBuffered value="false"/>
                   <enabled value="true"/>
-                  <icon value="icons/ClockIcon.png"/>
+                  <icon value="sprites/icons/ClockIcon.png"/>
                   <inheritsPopupMenu value="true"/>
                   <opaque value="false"/>
                   <text value=""/>
@@ -75,7 +75,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <icon value="icons/BIcon.png"/>
+                  <icon value="sprites/icons/BIcon.png"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -103,7 +103,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <icon value="icons/RIcon.png"/>
+                  <icon value="sprites/icons/RIcon.png"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -133,7 +133,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <icon value="icons/BlueIcon.png"/>
+                  <icon value="sprites/icons/BlueIcon.png"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -161,7 +161,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <icon value="icons/WIcon.png"/>
+                  <icon value="sprites/icons/WIcon.png"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -191,7 +191,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <icon value="icons/TieIcon.png"/>
+                  <icon value="sprites/icons/TieIcon.png"/>
                   <text value=""/>
                 </properties>
               </component>
