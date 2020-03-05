@@ -3,6 +3,7 @@ package forms;
 import client.ClientMain;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class Lobby extends JFrame implements ActionListener, MouseListener, KeyListener {
@@ -24,12 +25,19 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
     }
 
     public static void testStuff() {
+        Dimension maxSize = new Dimension(3840, 2160);
+        Dimension prefSize = new Dimension(1280, 720);
+        Dimension minSize = new Dimension(1070, 720);
+
         frame = new JFrame("Bomberman");
         Lobby lobby = new Lobby();
         frame.getContentPane().add(lobby.Lobby);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        frame.setMinimumSize(minSize);
+        frame.setPreferredSize(prefSize);
+        frame.setMaximumSize(maxSize);
     }
 
     public Lobby() {
