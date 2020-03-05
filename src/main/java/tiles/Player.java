@@ -1,7 +1,9 @@
 package tiles;
 
+import client.ClientMain;
 import lombok.Getter;
 import lombok.Setter;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +20,9 @@ public class Player extends BasicTile{
     @Getter @Setter private String direction = "n";
     @Getter @Setter private BasicTile currentTile;
 
+
     public Player(BasicTile[][] tiles){
+
         setSolid(true);
         setDestroyable(true);
         setImagePath("");

@@ -5,18 +5,34 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientMain extends Thread {
+
     protected Socket socket;
     String ip = "127.0.0.1"; // localhost
     int port = 986;
     DataOutputStream dOut = null;
     DataInputStream dIn = null;
+    public ClientMain client;
+    public String username;
+    private boolean isConnected;
 
-    public ClientMain() {
+    public ClientMain(ClientMain client, String username) {
+        this.client = client;
+        this.username = username;
         System.out.println("Client created");
         try {
             socket = new Socket(ip, port);
+            isConnected = true;
         } catch (Exception ignored) {
             System.out.println("failed created");
+            isConnected = false;
+        }
+    }
+
+    public boolean IsconnectedToServer() {
+        if (isConnected) {
+            return true;
+        } else {
+            return false;
         }
     }
 
