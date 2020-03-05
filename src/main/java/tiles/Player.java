@@ -27,13 +27,17 @@ public class Player extends BasicTile{
         setImagePath("");
         setTiles(tiles);
         currentTile = this;
-        URL upMovement = getClass().getResource("../sprites/players/black/BBack.gif");
-        URL downMovement = getClass().getResource("../sprites/players/black/BFront.gif");
-        URL rightMovement = getClass().getResource("../sprites/players/black/BRight.gif");
-        URL leftMovement = getClass().getResource("../sprites/players/black/BLeft.gif");
-        URL imgURL = getClass().getResource("../sprites/players/black/BStand.png");
-        ImageIcon sprite = new ImageIcon(imgURL);
-        setPlayerSprite(new JLabel(sprite, JLabel.CENTER));
+        URL bUp = getClass().getResource("../sprites/players/black/BBack.gif");
+        URL bDown = getClass().getResource("../sprites/players/black/BFront.gif");
+        URL bRight = getClass().getResource("../sprites/players/black/BRight.gif");
+        URL bLeft = getClass().getResource("../sprites/players/black/BLeft.gif");
+        URL bStand = getClass().getResource("../sprites/players/black/BStand.png");
+        ImageIcon standSprite = new ImageIcon(bStand);
+        ImageIcon upSprite = new ImageIcon(bUp);
+        ImageIcon downSprite = new ImageIcon(bDown);
+        ImageIcon rightSprite = new ImageIcon(bRight);
+        ImageIcon leftSprite = new ImageIcon(bLeft);
+        setPlayerSprite(new JLabel(standSprite, JLabel.CENTER));
         playerSprite.setMinimumSize(new Dimension(50, 50));
         add(playerSprite);
     }
