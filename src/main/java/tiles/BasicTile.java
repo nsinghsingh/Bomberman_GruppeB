@@ -18,9 +18,10 @@ public class BasicTile extends JPanel{
         BasicTile newTile = new BasicTile();
         newTile.setSolid(isSolid());
         newTile.setDestroyable(isDestroyable());
-        newTile.setImagePath(getImagePath());
+        newTile.setImagePath("/sprites/tiles/Grass1.png");
         newTile.setBackground(getBackground());
         return newTile;
+        //getImagePath()
     }
 
     public void setImagePath(String imagePath) {
