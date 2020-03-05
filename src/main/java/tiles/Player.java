@@ -22,17 +22,16 @@ public class Player extends BasicTile{
 
 
     public Player(BasicTile[][] tiles){
-
         setSolid(true);
         setDestroyable(true);
         setImagePath("");
         setTiles(tiles);
         currentTile = this;
-        URL upMovement = getClass().getResource("sprites/players/black/BBack.gif");
-        URL downMovement = getClass().getResource("sprites/players/black/BFront.gif");
-        URL rightMovement = getClass().getResource("sprites/players/black/BRight.gif");
-        URL leftMovement = getClass().getResource("sprites/players/black/BLeft.gif");
-        URL imgURL = getClass().getResource("sprites/players/black/BStand.png");
+        URL upMovement = getClass().getResource("../sprites/players/black/BBack.gif");
+        URL downMovement = getClass().getResource("../sprites/players/black/BFront.gif");
+        URL rightMovement = getClass().getResource("../sprites/players/black/BRight.gif");
+        URL leftMovement = getClass().getResource("../sprites/players/black/BLeft.gif");
+        URL imgURL = getClass().getResource("../sprites/players/black/BStand.png");
         ImageIcon sprite = new ImageIcon(imgURL);
         setPlayerSprite(new JLabel(sprite, JLabel.CENTER));
         playerSprite.setMinimumSize(new Dimension(50, 50));
