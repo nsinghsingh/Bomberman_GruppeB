@@ -32,6 +32,7 @@ public class ServerMain {
                     Socket newClient = serverSocket.accept();
                     clientSocketList.add(newClient);
                     currPlayercount++;
+                    receiveMessage();
                 } catch (Exception ignore) {
                     System.out.println("failed To connet");
                 }
@@ -48,8 +49,10 @@ public class ServerMain {
         try {
             for (Socket clientSocket : clientSocketList
             ) {
+
                 dOut = new DataOutputStream(clientSocket.getOutputStream());
                 dOut.writeUTF(message);
+                System.out.println("ServerSendetToClient2");
                 dOut.flush();
             }
         } catch (Exception ignore) {
@@ -62,21 +65,19 @@ public class ServerMain {
         ) {
             //System.out.println(clientSocket);
             try {
+
                 dIn = new DataInputStream(clientSocket.getInputStream());
                 while (dIn.available() > 0) {
                     String k = dIn.readUTF();
-                    System.out.println(k + clientSocket);
                     //send back to the client (Here would be a Method call to Validate stuff)
-                    sendMessage(k + clientSocket);
+                    System.out.println("ServerSendetToClient");
+                    sendMessage(k);
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
-
-
     }
+
 }
