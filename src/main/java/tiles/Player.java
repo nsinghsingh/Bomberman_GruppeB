@@ -24,7 +24,7 @@ public class Player extends BasicTile{
         setImagePath("");
         setTiles(tiles);
         currentTile = this;
-        URL imgURL = getClass().getResource("../icons/black-player.png");
+        URL imgURL = getClass().getResource("../icons/BIcon.png");
         ImageIcon icon = new ImageIcon(imgURL);
         setPlayerIcon(new JLabel(icon, JLabel.CENTER));
         playerIcon.setMinimumSize(new Dimension(50, 50));
@@ -92,7 +92,11 @@ public class Player extends BasicTile{
         catch (Exception ignored){}
     }
 
-    public void placeBomb(){}
+    public void placeBomb(){
 
-    public void die(){}
+    }
+
+    public void die(){
+
+    }
 }
