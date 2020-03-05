@@ -1,106 +1,1 @@
-package forms;
-
-import lombok.Getter;
-import lombok.Setter;
-import tiles.*;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.HashMap;
-
-public class Labyrinth {
-    private JPanel Labyrinth;
-    @Getter private JPanel GameRender; //Getter is needed for a test
-    private JPanel GameInfo;
-    private JLabel Time;
-    private JPanel ClockIcon;
-    private JLabel P1Score;
-    private JLabel P2Score;
-    private JLabel P3Score;
-    private JLabel P4Score;
-    private JLabel TieScore;
-    private JPanel TieIcon;
-    private JPanel P4Icon;
-    private JPanel P3Icon;
-    private JPanel P2Icon;
-    private JPanel P1Icon;
-    private JLabel Clock;
-    private JLabel P1;
-    private JLabel Tie;
-    private JLabel P4;
-    private JLabel P3;
-    private JLabel P2;
-
-    final static int Y_LENGTH = 12;
-    final static int X_LENGTH = 22;
-    @Getter @Setter private BasicTile[][] tiles = new BasicTile[Y_LENGTH][X_LENGTH];
-    @Getter @Setter private HashMap<Integer, BasicTile> tileTypes = new HashMap<>();
-
-    public Labyrinth(){
-        GridLayout playingField = new GridLayout(Y_LENGTH, X_LENGTH, 0, 0);
-        GameRender.setLayout(playingField);
-        tileTypes.put(0, new EmptyTile());
-        tileTypes.put(1, new UndestroyableBlock());
-        tileTypes.put(2, new DestroyableBlock());
-        tileTypes.put(3, new Player(tiles));
-    }
-
-    public static void main(String[] args){
-        JFrame frame = new JFrame("FrameDemo");
-        Labyrinth labyrinth = new Labyrinth();
-        int[][] mapValues = new int[12][22];
-        mapValues[0] = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-        mapValues[1][1] = 3;
-        mapValues[10][1] = 3;
-        mapValues[1][20] = 3;
-        mapValues[10][20] = 3;
-        mapValues[11] = mapValues[0];
-        for (int i = 0; i < mapValues.length; i++) {
-            mapValues[i][0] = 1;
-            mapValues[i][21] = 1;
-        }
-        labyrinth.loadMap(mapValues);
-        frame.getContentPane().add(labyrinth.Labyrinth);
-        Player player = (Player) labyrinth.getTiles()[1][1];
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        player.playerMove();
-        player.setDirection("d");
-    }
-
-    public void loadMap(int[][] mapValues){
-        if(loadArray(mapValues)){
-            for (BasicTile[] column : getTiles()) {
-                for (BasicTile tile : column) {
-                    GameRender.add(tile);
-                }
-            }
-        }
-        else{
-            //TODO Add error message
-        }
-    }
-
-    public boolean loadArray(int[][] mapValues){
-        if (getTiles().length == mapValues.length && getTiles()[0].length == mapValues[0].length){
-            for (int i = 0; i < mapValues.length; i++) {
-                for (int j = 0; j < mapValues[i].length; j++) {
-                    getTiles()[i][j] = getTileTypes().get(mapValues[i][j]).clone();
-                }
-            }
-            return checkMap();
-        }
-        else {
-            return false;
-        }
-    }
-
-    public boolean checkMap(){
-        if (!(getTiles()[1][1] instanceof Player)){ return false; }
-        if (!(getTiles()[1][X_LENGTH-2] instanceof Player)){ return false; }
-        if (!(getTiles()[Y_LENGTH-2][1] instanceof Player)){ return false; }
-        if (!(getTiles()[Y_LENGTH-2][X_LENGTH-2] instanceof Player)){ return false; }
-        return true;
-    }
-}
+package forms;import lombok.Getter;import lombok.Setter;import tiles.*;import javax.swing.*;import java.awt.*;import java.util.ArrayList;import java.util.HashMap;import java.util.List;public class Labyrinth {    private JPanel Labyrinth;    @Getter private JPanel GameRender; //Getter is needed for a test    private JPanel GameInfo;    private JLabel Time;    private JPanel ClockIcon;    private JLabel P1Score;    private JLabel P2Score;    private JLabel P3Score;    private JLabel P4Score;    private JLabel TieScore;    private JPanel TieIcon;    private JPanel P4Icon;    private JPanel P3Icon;    private JPanel P2Icon;    private JPanel P1Icon;    private JLabel Clock;    private JLabel P1;    private JLabel Tie;    private JLabel P4;    private JLabel P3;    private JLabel P2;    final static int Y_LENGTH = 12;    final static int X_LENGTH = 22;    @Getter @Setter private BasicTile[][] tiles = new BasicTile[Y_LENGTH][X_LENGTH];    @Getter @Setter private HashMap<Integer, BasicTile> tileTypes = new HashMap<>();    private JLayeredPane layers = new JLayeredPane();    private JPanel fieldLayer = new JPanel();    private JPanel[] playerLayers = new JPanel[4];    public Labyrinth(){        tileTypes.put(0, new EmptyTile());        tileTypes.put(1, new UndestroyableBlock());        tileTypes.put(2, new DestroyableBlock());        tileTypes.put(3, new Player(tiles));    }    public void initializeLayers(){        GridLayout playingField = new GridLayout(Y_LENGTH, X_LENGTH, 0, 0);        GameRender.setLayout(new BorderLayout());        layers.setLayout(new BorderLayout());        fieldLayer.setLayout(playingField);        GameRender.add(layers);        layers.setPreferredSize(GameRender.getPreferredSize());        fieldLayer.setPreferredSize(GameRender.getPreferredSize());        layers.add(fieldLayer, 100);        for (int i = 0; i < playerLayers.length; i++) {            playerLayers[i] = new JPanel();            playerLayers[i].setPreferredSize(GameRender.getPreferredSize());            playerLayers[i].setLayout(new BorderLayout());            //layers.add(playerLayers[i], i * 10);            playerLayers[i].setOpaque(false);        }    }    public static void main(String[] args){        JFrame frame = new JFrame("FrameDemo");        Labyrinth labyrinth = new Labyrinth();        frame.getContentPane().add(labyrinth.Labyrinth);        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        labyrinth.loadTestMap();        Player player = (Player) labyrinth.getTiles()[1][1];        frame.pack();        frame.setVisible(true);        player.playerMove();        player.setDirection("d");    }    public void loadTestMap(){        int[][] mapValues = new int[12][22];        mapValues[0] = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};        mapValues[1][1] = 3;        mapValues[10][1] = 3;        mapValues[1][20] = 3;        mapValues[10][20] = 3;        mapValues[11] = mapValues[0];        for (int i = 0; i < mapValues.length; i++) {            mapValues[i][0] = 1;            mapValues[i][21] = 1;        }        loadMap(mapValues);    }    public void loadMap(int[][] mapValues){        if(loadArray(mapValues)){            List<Player> players = new ArrayList<>();            initializeLayers();            for (int i = 0; i < getTiles().length; i++) {                for (int j = 0; j < getTiles()[i].length; j++) {                    if(mapValues[i][j] == 3){                        //players.add((Player) getTiles()[i][j]);                    }                    fieldLayer.add(getTiles()[i][j]);                }            }            for (int i = 0; i < players.size(); i++) {                playerLayers[i].add(players.get(i).getPlayerIcon());                layers.setLayer(players.get(i).getPlayerIcon(), i*10);            }        }        else{            //TODO Add error message        }    }    public boolean loadArray(int[][] mapValues){        if (getTiles().length == mapValues.length && getTiles()[0].length == mapValues[0].length){            for (int i = 0; i < mapValues.length; i++) {                for (int j = 0; j < mapValues[i].length; j++) {                    getTiles()[i][j] = getTileTypes().get(mapValues[i][j]).clone();                }            }            return checkMap();        }        else return false;    }    public boolean checkMap(){        if (!(getTiles()[1][1] instanceof Player)){ return false; }        if (!(getTiles()[1][X_LENGTH-2] instanceof Player)){ return false; }        if (!(getTiles()[Y_LENGTH-2][1] instanceof Player)){ return false; }        return getTiles()[Y_LENGTH - 2][X_LENGTH - 2] instanceof Player;    }}
