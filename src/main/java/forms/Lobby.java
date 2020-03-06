@@ -51,7 +51,7 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
 
     public void startGame(ClientMain client) {
         frame.setVisible(false);
-        /System.out.println("Gamestart");
+        System.out.println("Gamestart");
         labyrinth = new Labyrinth(client);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(labyrinth.getLabyrinth());
