@@ -63,8 +63,8 @@ public class Player extends BasicTile{
                 break;
         }
         URL bUp = getClass().getResource("../sprites/players/" + initial + "Back.gif");
-        URL bDown = getClass().getResource("../sprites/players" + initial + "Front.gif");
-        URL bRight = getClass().getResource("../sprites/players" + initial + "Right.gif");
+        URL bDown = getClass().getResource("../sprites/players/" + initial + "Front.gif");
+        URL bRight = getClass().getResource("../sprites/players/" + initial + "Right.gif");
         URL bLeft = getClass().getResource("../sprites/players/" + initial + "Left.gif");
         URL bStand = getClass().getResource("../sprites/players/" + initial + "Stand.png");
         ImageIcon standSprite = new ImageIcon(bStand);
