@@ -10,12 +10,13 @@ public class ClientMain extends Thread {
 
     protected Socket socket;
     String ip = "127.0.0.1"; // localhost
-    int port = 986;
+    int port = 4456;
     DataOutputStream dOut = null;
     DataInputStream dIn = null;
     public ClientMain client;
     public String username;
     public Lobby lobby;
+    public int clientID;
     private boolean isConnected;
 
     public ClientMain(ClientMain client, String username, Lobby lobby) {
@@ -51,15 +52,11 @@ public class ClientMain extends Thread {
     //sends a message to the server
     public void sendMessage(String message) {
         try {
-            System.out.println("wroteToServerFromClient");
             dOut = new DataOutputStream(socket.getOutputStream());
             dOut.writeUTF(message);
             dOut.flush();
-
         } catch (Exception ignore) {
-            System.out.println("error Sending");
         }
-
     }
 
     //receives a message from the server for all clients the same Message
@@ -67,37 +64,46 @@ public class ClientMain extends Thread {
         try {
             dIn = new DataInputStream(socket.getInputStream());
             String k = dIn.readUTF();
-
             //0 index = method call | 1 index = message
-            System.out.println(k);
             String[] methodAndMessage = k.split(";");
-            System.out.println(methodAndMessage[0]);
-
             methodAndMessages(methodAndMessage);
-        } catch (Exception ignore) {
 
+        } catch (Exception ignore) {
+            System.out.println("failedToGet MSG");
         }
     }
 
     public void methodAndMessages(String[] methodAndMessage) {
+        String playerId = "";
         String method = methodAndMessage[0];
         String message = methodAndMessage[1];
+
+        if (methodAndMessage.length >= 3) {
+            playerId = methodAndMessage[2];
+        }
 
         switch (method) {
             case "chat":
                 //chat stuff here:
                 lobby.writeInChat(message);
-
                 break;
-            case "playerMove":
-                //Move stuff here:
-
+            case "gamestart":
+                //Init GameStart create Labyrinth within the Lobby
+                client.lobby.startGame(this);
                 break;
-            case "playerBomb":
-                //Bomb stuff here:
+            case "clientID":
+                clientID = Integer.parseInt(message);
+                break;
+            case "method":
 
+                playerAction(message, Integer.parseInt(playerId));
                 break;
 
         }
+    }
+
+    public void playerAction(String action, int playerId) {
+        //send to Labrinth with Calle Function
+        //lobby.labyrinth
     }
 }
