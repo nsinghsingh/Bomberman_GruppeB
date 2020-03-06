@@ -27,7 +27,6 @@ public class Bomb extends BasicTile{
         this();
         setTimer(timer);
         setRadius(radius);
-        setLabyrinth(labyrinth);
     }
 
     public void explode(){

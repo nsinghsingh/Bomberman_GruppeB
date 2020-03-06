@@ -129,11 +129,24 @@ public class Player extends BasicTile{
         }
     }
 
-    public void placeBomb(){ }
+//    public void bombPlacement(){
+//    }
+
+    public void placeBomb(String placement){
+        int placedBomb = 1;
+//      Bomb numBomb = new JPanel();
+//      getXPosition() + getYPosition();
+        switch(placement){
+            case "e":
+                isDead = true;
+                die();
+                break;
+        }
+    }
 
     public void die(){
-        if (isDead = true) {
-
+        if (isDead) {
+            getFieldSprite().removeAll();
         }
     }
 }
