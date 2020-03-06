@@ -11,28 +11,63 @@ import java.net.URL;
 
 public class Player extends BasicTile{
 
-    @Getter @Setter private int xPosition = 50;
-    @Getter @Setter private int yPosition = 50;
-    @Getter @Setter private int targetX = 50;
-    @Getter @Setter private int targetY = 50;
-    @Getter @Setter private BasicTile[][] tiles;
+    @Getter @Setter private int xPosition;
+    @Getter @Setter private int yPosition;
+    @Getter @Setter private int targetX;
+    @Getter @Setter private int targetY;
     @Getter @Setter private JLabel playerSprite;
-    @Getter @Setter private String direction = "n";
-    @Getter @Setter private BasicTile currentTile;
+    @Getter private String direction = "n";
+    @Getter @Setter private JPanel field;
+    @Getter @Setter private boolean isDead;
+    @Getter private static int playerIndex;
+    //@Getter @Setter private ImageIcon sprite;
 
-
-    public Player(BasicTile[][] tiles){
+    public Player(JPanel field){
+        setField(field);
         setSolid(true);
         setDestroyable(true);
         setImagePath("");
-        setTiles(tiles);
-        currentTile = this;
-        URL upMovement = getClass().getResource("../sprites/players/black/BBack.gif");
-        URL downMovement = getClass().getResource("../sprites/players/black/BFront.gif");
-        URL rightMovement = getClass().getResource("../sprites/players/black/BRight.gif");
-        URL leftMovement = getClass().getResource("../sprites/players/black/BLeft.gif");
-        URL imgURL = getClass().getResource("../sprites/players/black/BStand.png");
-        ImageIcon sprite = new ImageIcon(imgURL);
+        setPlayer();
+    }
+
+    public void setPlayer(){
+        String initial = "";
+        switch (playerIndex){
+            case 1:
+                initial = "black/B";
+                playerIndex = 2;
+                setXPosition(50);
+                setYPosition(50);
+                break;
+            case 2:
+                initial = "blue/Blue";
+                playerIndex = 3;
+                setXPosition(1000);
+                setYPosition(50);
+                break;
+            case 3:
+                initial = "red/R";
+                playerIndex = 4;
+                setXPosition(50);
+                setYPosition(500);
+                break;
+            case 4:
+                initial = "white/W";
+                playerIndex = 1;
+                setXPosition(1000);
+                setYPosition(500);
+                break;
+            default:
+                initial = "white/W";
+                playerIndex = 1;
+                break;
+        }
+        URL upMovement = getClass().getResource("../sprites/players/" + initial + "Back.gif");
+        URL downMovement = getClass().getResource("../sprites/players/" + initial + "Front.gif");
+        URL rightMovement = getClass().getResource("../sprites/players/" + initial + "Right.gif");
+        URL leftMovement = getClass().getResource("../sprites/players" + initial + "Left.gif");
+        URL noMovement = getClass().getResource("../sprites/players/" + initial + "Stand.png");
+        ImageIcon sprite = new ImageIcon(noMovement);
         setPlayerSprite(new JLabel(sprite, JLabel.CENTER));
         playerSprite.setMinimumSize(new Dimension(50, 50));
         add(playerSprite);
@@ -40,64 +75,62 @@ public class Player extends BasicTile{
 
     @Override
     public BasicTile clone(){
-        return new Player(getTiles());
+        return new Player(field);
     }
 
-    public void playerMove(){ //TODO Change movement mid-timer and make it visible
-        Timer timer = new Timer(20, null);
-        timer.addActionListener(evt -> {
-            if(!getDirection().equals("n")){
-                setDirection(getDirection());
-                int xMovement = (getTargetX() - getXPosition()) / getSize().width;
-                int yMovement = (getTargetY() - getYPosition()) / getSize().height;
-                playerSprite.setLocation(playerSprite.getX() + xMovement, playerSprite.getY() + yMovement);
-                setXPosition(getXPosition() + xMovement);
-                setYPosition(getYPosition() + yMovement);
-                System.out.println(getXPosition());
-                BasicTile target = getTiles()[getXPosition()/getSize().width][getYPosition()/getSize().height];
-                if(getCurrentTile() != target){
-                    target.setSolid(true);
-                    currentTile.setSolid(false);
-                    setCurrentTile(target);
-                }
+    public void playerMove(){
+        if(!getDirection().equals("n")) {
+            int targetIndex = getTargetX() / getSize().width + getTargetY() / getSize().height * 22;
+            int originIndex = getXPosition() / getSize().width + getYPosition() / getSize().height * 22;
+            Component[] components = field.getComponents();
+            field.removeAll();
+            Component temp = components[targetIndex];
+            components[targetIndex] = components[originIndex];
+            components[originIndex] = temp;
+            for (Component component : components) {
+                field.add(component);
             }
-        });
-        timer.start();
+            field.validate();
+            setXPosition(getTargetX());
+            setYPosition(getTargetY());
+        }
     }
 
     public void setDirection(String direction){
         int width = getSize().width;
         int height = getSize().height;
-        int originY = getYPosition();
-        int originX = getXPosition();
-        setTargetY(originY);
-        setTargetX(originX);
+        setTargetY(getYPosition());
+        setTargetX(getXPosition());
         switch(direction){
             case "w":
-                setTargetY(originY - height);
+                setTargetY(getYPosition() - height);
                 break;
             case "a":
-                setTargetX(originX - width);
+                setTargetX(getXPosition() - width);
                 break;
             case "s":
-                setTargetY(originY + height);
+                setTargetY(getYPosition() + height);
                 break;
             case "d":
-                setTargetX(originX + width);
+                setTargetX(getXPosition() + width);
                 break;
             default:
                 this.direction = "n";
         }
         try{
-            BasicTile targetTile = getTiles()[getTargetX()/width][getTargetY()/height];
+            int targetIndex = getTargetX() / getSize().width + getTargetY() / getSize().height * 22;
+            BasicTile targetTile = (BasicTile) field.getComponent(targetIndex);
             if(!targetTile.isSolid()){
                 this.direction = direction;
             }
             else{
                 this.direction = "n";
             }
+            playerMove();
         }
-        catch (Exception ignored){}
+        catch (Exception ignored){
+            System.out.println("error");
+        }
     }
 
     public void placeBomb(){ }
