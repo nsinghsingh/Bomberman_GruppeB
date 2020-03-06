@@ -11,7 +11,7 @@ public class LabyrinthTest {
 
     @Before
     public void setUp() throws Exception {
-        labyrinth = new Labyrinth();
+        labyrinth = new Labyrinth(null);
         map[0] = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
         map[11] = map[0];
         for (int i = 0; i < map.length; i++) {

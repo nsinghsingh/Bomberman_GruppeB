@@ -13,15 +13,13 @@ public class ClientMain extends Thread {
     int port = 4456;
     DataOutputStream dOut = null;
     DataInputStream dIn = null;
-    public ClientMain client;
     public String username;
     public Lobby lobby;
     public int clientID;
     private boolean isConnected;
 
-    public ClientMain(ClientMain client, String username, Lobby lobby) {
+    public ClientMain(String username, Lobby lobby) {
         this.lobby = lobby;
-        this.client = client;
         this.username = username;
         System.out.println("Client created");
         try {
@@ -68,16 +66,19 @@ public class ClientMain extends Thread {
             String[] methodAndMessage = k.split(";");
             methodAndMessages(methodAndMessage);
 
-        } catch (Exception ignore) {
+        } catch (Exception e) {
             System.out.println("failedToGet MSG");
         }
+
     }
 
     public void methodAndMessages(String[] methodAndMessage) {
         String playerId = "";
+        String message = "";
         String method = methodAndMessage[0];
-        String message = methodAndMessage[1];
-
+        if (methodAndMessage.length == 2) {
+            message = methodAndMessage[1];
+        }
         if (methodAndMessage.length >= 3) {
             playerId = methodAndMessage[2];
         }
@@ -89,13 +90,12 @@ public class ClientMain extends Thread {
                 break;
             case "gamestart":
                 //Init GameStart create Labyrinth within the Lobby
-                client.lobby.startGame(this);
+                lobby.startGame(this);
                 break;
             case "clientID":
                 clientID = Integer.parseInt(message);
                 break;
             case "method":
-
                 playerAction(message, Integer.parseInt(playerId));
                 break;
 
@@ -103,7 +103,6 @@ public class ClientMain extends Thread {
     }
 
     public void playerAction(String action, int playerId) {
-        //send to Labrinth with Calle Function
-        //lobby.labyrinth
+        lobby.labyrinth.updateLabyrinth(action, playerId);
     }
 }

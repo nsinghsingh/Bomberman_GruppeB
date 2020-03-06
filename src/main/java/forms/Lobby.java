@@ -13,7 +13,7 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
     private JTextArea chatArea;
     private JTextField chatField;
     private JList list1;
-    static JFrame frame;
+    private JFrame frame;
     public Labyrinth labyrinth;
 
     ClientMain client;
@@ -22,24 +22,9 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
     public static void main(String[] args) {
         //Currently Creating 4 User to test The game
         for (int i = 0; i < 4; i++) {
-            testStuff();
+            Lobby lobby = new Lobby();
+            lobby.testStuff();
         }
-    }
-
-    public static void testStuff() {
-        Dimension maxSize = new Dimension(3840, 2160);
-        Dimension prefSize = new Dimension(1280, 720);
-        Dimension minSize = new Dimension(1070, 720);
-
-        frame = new JFrame("Bomberman");
-        Lobby lobby = new Lobby();
-        frame.getContentPane().add(lobby.Lobby);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        frame.setMinimumSize(minSize);
-        frame.setPreferredSize(prefSize);
-        frame.setMaximumSize(maxSize);
     }
 
     public Lobby() {
@@ -49,11 +34,31 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
         chatField.addKeyListener(this);
     }
 
+    public void testStuff() {
+        Dimension maxSize = new Dimension(3840, 2160);
+        Dimension prefSize = new Dimension(1280, 720);
+        Dimension minSize = new Dimension(1070, 720);
+
+        frame = new JFrame("Bomberman");
+        frame.getContentPane().add(Lobby);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setMinimumSize(minSize);
+        frame.setPreferredSize(prefSize);
+        frame.setMaximumSize(maxSize);
+    }
+
     public void startGame(ClientMain client) {
-        System.out.println("Gamestart");
-        labyrinth = new Labyrinth();
-
-
+        frame.setVisible(false);
+        /System.out.println("Gamestart");
+        labyrinth = new Labyrinth(client);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(labyrinth.getLabyrinth());
+        labyrinth.makeMap();
+        frame.pack();
+        frame.setVisible(true);
+        frame.addKeyListener(labyrinth);
     }
 
     @Override
@@ -61,7 +66,7 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
         if (e.getSource() == joinButton) {
             if (client == null) {
                 //join button
-                client = new ClientMain(client, usernameTextField.getText(), this);
+                client = new ClientMain(usernameTextField.getText(), this);
                 client.start();
                 if (client.IsconnectedToServer()) {
                     //is Connected to server/game --> do something
