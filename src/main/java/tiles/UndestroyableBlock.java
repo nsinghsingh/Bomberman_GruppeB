@@ -7,7 +7,6 @@ public class UndestroyableBlock extends BasicTile{
     public UndestroyableBlock() {
         setSolid(true);
         setDestroyable(false);
-        setImagePath("");
-        setBackground(Color.GRAY);
+        setImagePath("../sprites/tiles/Wall.png");
     }
 }

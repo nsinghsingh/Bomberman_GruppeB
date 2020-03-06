@@ -20,13 +20,13 @@ public class Player extends BasicTile{
     @Getter @Setter private JPanel field;
     @Getter @Setter private boolean isDead;
     @Getter private static int playerIndex;
-    //@Getter @Setter private ImageIcon sprite;
+    @Getter @Setter private ImageIcon sprite;
 
     public Player(JPanel field){
         setField(field);
         setSolid(true);
         setDestroyable(true);
-        setImagePath("");
+        setImagePath("../sprites/tiles/Grass1.png");
         setPlayer();
     }
 
@@ -67,10 +67,12 @@ public class Player extends BasicTile{
         URL rightMovement = getClass().getResource("../sprites/players/" + initial + "Right.gif");
         URL leftMovement = getClass().getResource("../sprites/players" + initial + "Left.gif");
         URL noMovement = getClass().getResource("../sprites/players/" + initial + "Stand.png");
-        ImageIcon sprite = new ImageIcon(noMovement);
+        sprite = new ImageIcon(noMovement);
         setPlayerSprite(new JLabel(sprite, JLabel.CENTER));
         playerSprite.setMinimumSize(new Dimension(50, 50));
         add(playerSprite);
+        setComponentZOrder(getFieldSprite(), 1);
+        setComponentZOrder(playerSprite, 0);
     }
 
     @Override
