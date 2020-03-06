@@ -3,20 +3,20 @@
   <grid id="27dc6" binding="Labyrinth" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1024" height="720"/>
+      <xy x="20" y="20" width="1280" height="720"/>
     </constraints>
     <properties>
       <background color="-3618616"/>
       <maximumSize width="3840" height="2160"/>
-      <minimumSize width="1024" height="720"/>
+      <minimumSize width="1280" height="720"/>
       <preferredSize width="1280" height="720"/>
     </properties>
     <border type="none"/>
     <children>
-      <grid id="8fdf8" binding="GameInfo" layout-manager="GridLayoutManager" row-count="1" column-count="19" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="8fdf8" binding="GameInfo" layout-manager="GridLayoutManager" row-count="1" column-count="21" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="true">
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="4" anchor="0" fill="1" indent="0" use-parent-layout="true">
             <minimum-size width="-1" height="36"/>
             <maximum-size width="-1" height="108"/>
           </grid>
@@ -36,7 +36,9 @@
           <grid id="70f89" binding="ClockIcon" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="35" height="35"/>
+                <preferred-size width="35" height="35"/>
                 <maximum-size width="55" height="55"/>
               </grid>
             </constraints>
@@ -65,7 +67,11 @@
           <grid id="19dd5" binding="P1Icon" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="35" height="35"/>
+                <preferred-size width="35" height="35"/>
+                <maximum-size width="35" height="35"/>
+              </grid>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -83,7 +89,7 @@
           </grid>
           <component id="fc022" class="javax.swing.JLabel" binding="P1Score">
             <constraints>
-              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Verdana"/>
@@ -93,7 +99,11 @@
           <grid id="24f1b" binding="P2Icon" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="35" height="35"/>
+                <preferred-size width="35" height="35"/>
+                <maximum-size width="35" height="35"/>
+              </grid>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -111,7 +121,7 @@
           </grid>
           <component id="69dfa" class="javax.swing.JLabel" binding="P2Score">
             <constraints>
-              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Verdana"/>
@@ -121,8 +131,10 @@
           <grid id="a623d" binding="P3Icon" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="10" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="18" height="24"/>
+              <grid row="0" column="11" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <minimum-size width="35" height="35"/>
+                <preferred-size width="35" height="35"/>
+                <maximum-size width="35" height="35"/>
               </grid>
             </constraints>
             <properties/>
@@ -141,7 +153,7 @@
           </grid>
           <component id="e445e" class="javax.swing.JLabel" binding="P3Score">
             <constraints>
-              <grid row="0" column="11" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="12" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Verdana"/>
@@ -151,7 +163,11 @@
           <grid id="9b1f0" binding="P4Icon" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="13" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="14" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="35" height="35"/>
+                <preferred-size width="35" height="35"/>
+                <maximum-size width="35" height="35"/>
+              </grid>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -169,7 +185,7 @@
           </grid>
           <component id="12f3b" class="javax.swing.JLabel" binding="P4Score">
             <constraints>
-              <grid row="0" column="14" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="15" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Verdana"/>
@@ -179,8 +195,10 @@
           <grid id="19a4a" binding="TieIcon" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="16" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="21" height="24"/>
+              <grid row="0" column="18" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="35" height="35"/>
+                <preferred-size width="35" height="35"/>
+                <maximum-size width="35" height="35"/>
               </grid>
             </constraints>
             <properties/>
@@ -200,47 +218,49 @@
           <hspacer id="460c">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="50" height="-1"/>
-                <preferred-size width="50" height="-1"/>
+                <minimum-size width="65" height="-1"/>
+                <preferred-size width="65" height="-1"/>
               </grid>
             </constraints>
           </hspacer>
           <hspacer id="df256">
             <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="25" height="-1"/>
               </grid>
             </constraints>
           </hspacer>
           <hspacer id="a4c4a">
             <constraints>
-              <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="10" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="25" height="-1"/>
               </grid>
             </constraints>
           </hspacer>
           <hspacer id="691c7">
             <constraints>
-              <grid row="0" column="12" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="13" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="25" height="-1"/>
               </grid>
             </constraints>
           </hspacer>
           <hspacer id="7f5f2">
             <constraints>
-              <grid row="0" column="15" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="25" height="-1"/>
+              <grid row="0" column="16" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="-1"/>
               </grid>
             </constraints>
           </hspacer>
           <hspacer id="4ac33">
             <constraints>
-              <grid row="0" column="18" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="20" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="300" height="-1"/>
+              </grid>
             </constraints>
           </hspacer>
           <component id="943a3" class="javax.swing.JLabel" binding="TieScore">
             <constraints>
-              <grid row="0" column="17" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+              <grid row="0" column="19" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="26" height="16"/>
               </grid>
             </constraints>
@@ -253,10 +273,28 @@
           <hspacer id="ffe8b">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="10" height="-1"/>
+                <minimum-size width="60" height="-1"/>
               </grid>
             </constraints>
           </hspacer>
+          <component id="e0034" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Verdana"/>
+              <text value="Deaths:"/>
+            </properties>
+          </component>
+          <component id="106f0" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="17" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Verdana"/>
+              <text value="Timeouts:"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="6bc1e" binding="GameRender" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
