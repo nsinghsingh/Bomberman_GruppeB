@@ -23,6 +23,7 @@ public class Player extends BasicTile{
     @Getter @Setter private ImageIcon sprite;
 
     public Player(JPanel field){
+        setLayout(new BorderLayout());
         setField(field);
         setSolid(true);
         setDestroyable(true);
@@ -74,6 +75,9 @@ public class Player extends BasicTile{
         ImageIcon leftSprite = new ImageIcon(bLeft);
         setPlayerSprite(new JLabel(standSprite, JLabel.CENTER));
         playerSprite.setMinimumSize(new Dimension(50, 50));
+        playerSprite.setOpaque(false);
+        playerSprite.setBackground(new Color(0,0,0,0));
+        playerSprite.repaint();
         add(playerSprite);
         setComponentZOrder(getFieldSprite(), 1);
         setComponentZOrder(playerSprite, 0);
