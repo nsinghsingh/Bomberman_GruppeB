@@ -1,5 +1,6 @@
 package tiles;
 
+import forms.Labyrinth;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -131,6 +132,8 @@ public class Player extends BasicTile{
     public void placeBomb(){ }
 
     public void die(){
+        if (isDead = true) {
 
+        }
     }
 }
