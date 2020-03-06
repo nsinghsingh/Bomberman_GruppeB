@@ -76,7 +76,7 @@ public class ClientMain extends Thread {
         String playerId = "";
         String message = "";
         String method = methodAndMessage[0];
-        if (methodAndMessage.length == 2) {
+        if (methodAndMessage.length >= 2) {
             message = methodAndMessage[1];
         }
         if (methodAndMessage.length >= 3) {
@@ -103,6 +103,7 @@ public class ClientMain extends Thread {
     }
 
     public void playerAction(String action, int playerId) {
+        System.out.println("the message is:" + action);
         lobby.labyrinth.updateLabyrinth(action, playerId);
     }
 }

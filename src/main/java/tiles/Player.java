@@ -1,6 +1,5 @@
 package tiles;
 
-import client.ClientMain;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +18,6 @@ public class Player extends BasicTile{
     @Getter private String direction = "n";
     @Getter @Setter private JPanel field;
     @Getter @Setter private boolean isDead;
-    @Getter private static int playerIndex;
     @Getter @Setter private ImageIcon sprite;
 
     public Player(JPanel field){
@@ -28,39 +26,30 @@ public class Player extends BasicTile{
         setSolid(true);
         setDestroyable(true);
         setImagePath("../sprites/tiles/Grass1.png");
-        setPlayer();
     }
 
-    public void setPlayer(){
+    public void setPlayer(int playerIndex){
         String initial = "";
         switch (playerIndex){
-            case 1:
+            case 0:
                 initial = "black/B";
-                playerIndex = 2;
                 setXPosition(50);
+                setYPosition(50);
+                break;
+            case 1:
+                initial = "blue/Blue";
+                setXPosition(1000);
                 setYPosition(50);
                 break;
             case 2:
-                initial = "blue/Blue";
-                playerIndex = 3;
-                setXPosition(1000);
-                setYPosition(50);
-                break;
-            case 3:
                 initial = "red/R";
-                playerIndex = 4;
                 setXPosition(50);
-                setYPosition(500);
-                break;
-            case 4:
-                initial = "white/W";
-                playerIndex = 1;
-                setXPosition(1000);
                 setYPosition(500);
                 break;
             default:
                 initial = "white/W";
-                playerIndex = 1;
+                setXPosition(1000);
+                setYPosition(500);
                 break;
         }
         URL bUp = getClass().getResource("../sprites/players/" + initial + "Back.gif");
