@@ -14,11 +14,13 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
     private JTextField chatField;
     private JList list1;
     static JFrame frame;
+    public Labyrinth labyrinth;
 
     ClientMain client;
     Boolean isInChatField = false;
 
     public static void main(String[] args) {
+        //Currently Creating 4 User to test The game
         for (int i = 0; i < 4; i++) {
             testStuff();
         }
@@ -45,6 +47,13 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
         usernameTextField.addMouseListener(this);
         chatField.addMouseListener(this);
         chatField.addKeyListener(this);
+    }
+
+    public void startGame(ClientMain client) {
+        System.out.println("Gamestart");
+        labyrinth = new Labyrinth();
+
+
     }
 
     @Override
@@ -107,7 +116,8 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
     }
 
     public void writeInChat(String message) {
-        chatArea.append(message+"\n");
+        System.out.println(message);
+        chatArea.append(message + "\n");
 
     }
 

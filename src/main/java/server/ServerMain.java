@@ -1,16 +1,19 @@
 package server;
 
 import client.ClientMain;
+import lombok.ToString;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 
 public class ServerMain {
 
-    static final int PORT = 986;
+    static final int PORT = 4456;
     static public int currPlayercount;
     static private DataInputStream dIn = null;
     static private DataOutputStream dOut = null;
@@ -31,13 +34,16 @@ public class ServerMain {
                 try {
                     Socket newClient = serverSocket.accept();
                     clientSocketList.add(newClient);
+                    sendIdMessage("clientID;" + currPlayercount,newClient);
+
                     currPlayercount++;
                     receiveMessage();
+                    if (currPlayercount == 4) {
+                        countDown();
+                    }
                 } catch (Exception ignore) {
-                    System.out.println("failed To connet");
                 }
             }
-
             //loops after 4 players are connected.
             receiveMessage();
         }
@@ -45,16 +51,24 @@ public class ServerMain {
 
     //sends a Message to all clients
     static public void sendMessage(String message) {
-
         try {
             for (Socket clientSocket : clientSocketList
             ) {
-
                 dOut = new DataOutputStream(clientSocket.getOutputStream());
                 dOut.writeUTF(message);
-                System.out.println("ServerSendetToClient2");
                 dOut.flush();
             }
+        } catch (Exception ignore) {
+        }
+    }
+
+    static public void sendIdMessage(String message,Socket client) {
+        try {
+            System.out.println(message);
+            dOut = new DataOutputStream(client.getOutputStream());
+            dOut.writeUTF(message);
+            dOut.flush();
+
         } catch (Exception ignore) {
         }
     }
@@ -63,21 +77,38 @@ public class ServerMain {
     static public void receiveMessage() {
         for (Socket clientSocket : clientSocketList
         ) {
-            //System.out.println(clientSocket);
             try {
-
                 dIn = new DataInputStream(clientSocket.getInputStream());
                 while (dIn.available() > 0) {
                     String k = dIn.readUTF();
-                    //send back to the client (Here would be a Method call to Validate stuff)
-                    System.out.println("ServerSendetToClient");
+                    //sends Back to all the client
                     sendMessage(k);
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    static int count;
+
+    public static void countDown() {
+        count = 5;
+        Timer timer = new Timer();
+        sendMessage("chat;Server: Starting GAME !");
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+
+                if (count > 0)
+                    sendMessage("chat;Server: " + count);
+                count--;
+
+                if (count == 0)
+                    sendMessage("gamestart;");
+            }
+        };
+        timer.schedule(task, 0, 1000);
     }
 
 }
