@@ -13,7 +13,7 @@ public class Bomb extends BasicTile{
     private Bomb(){
         setSolid(true);
         setDestroyable(true);
-        setImagePath("");
+        setImagePath("../sprites/bomb/Bomb.gif");
     }
 
     public Bomb(Labyrinth labyrinth){
