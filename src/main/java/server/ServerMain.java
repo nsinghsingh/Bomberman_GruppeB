@@ -9,29 +9,30 @@ import java.util.TimerTask;
 
 public class ServerMain {
 
-    static final int PORT = 4456;
-    static public int currPlayercount;
-    static private DataInputStream dIn = null;
-    static private DataOutputStream dOut = null;
-    static private ArrayList<Socket> clientSocketList = new ArrayList<Socket>(4);
+    private static final int PORT = 4456;
+    private static int currPlayercount;
+    private static int count;
+    private static DataInputStream dIn = null;
+    private static DataOutputStream dOut = null;
+    private static ArrayList<Socket> clientSocketList = new ArrayList<Socket>(4);
 
     public static void main(String args[]) {
+        //Creates the server which Clients will join and play on
         ServerSocket serverSocket = null;
         currPlayercount = 0;
         try {
             serverSocket = new ServerSocket(PORT);
         } catch (IOException e) {
             e.printStackTrace();
-
         }
 
+        //Loops all the Time and checks for any client requests
         while (true) {
             if (currPlayercount < 4) {
                 try {
                     Socket newClient = serverSocket.accept();
                     clientSocketList.add(newClient);
-                    sendIdMessage("clientID;" + currPlayercount,newClient);
-
+                    sendIdMessage("clientID;" + currPlayercount, newClient);
                     currPlayercount++;
                     receiveMessage();
                     if (currPlayercount == 4) {
@@ -40,13 +41,19 @@ public class ServerMain {
                 } catch (Exception ignore) {
                 }
             }
-            //loops after 4 players are connected.
+            //after 4 players are connected. Always listens for Requests
             receiveMessage();
         }
     }
 
-    //sends a Message to all clients
-    static public void sendMessage(String message) {
+    /*
+    Will send to all 4 Clients the same message.
+    Sends a message to the Clients which contains a String code
+    That will contain different types of information's this will be in a String and is sectioned by a semicolon ';'
+    The syntax looks like this 'action;message;playerID'
+    For example when a Player moves 'method;w;2' this means that we are calling method which is a Method a message 'w' which is the direction and 1 which is the player that moved.
+     */
+    static private void sendMessage(String message) {
         try {
             for (Socket clientSocket : clientSocketList
             ) {
@@ -54,22 +61,24 @@ public class ServerMain {
                 dOut.writeUTF(message);
                 dOut.flush();
             }
-        } catch (Exception ignore) {
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    static public void sendIdMessage(String message,Socket client) {
+    //Sends a Integer to the client so that he has a unique ID to further distinguished the players
+    static private void sendIdMessage(String message, Socket client) {
         try {
             System.out.println(message);
             dOut = new DataOutputStream(client.getOutputStream());
             dOut.writeUTF(message);
             dOut.flush();
-
-        } catch (Exception ignore) {
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    //receives Client messages
+    //Always listens and when a client Sends a Message it will be send Back to sendMessage which will send it to all clients
     static public void receiveMessage() {
         for (Socket clientSocket : clientSocketList
         ) {
@@ -77,7 +86,6 @@ public class ServerMain {
                 dIn = new DataInputStream(clientSocket.getInputStream());
                 while (dIn.available() > 0) {
                     String k = dIn.readUTF();
-                    //sends Back to all the client
                     sendMessage(k);
                 }
             } catch (IOException e) {
@@ -86,9 +94,8 @@ public class ServerMain {
         }
     }
 
-    static int count;
-
-    public static void countDown() {
+    //A counter that starts to count when 4 players are connected.
+    static private void countDown() {
         count = 5;
         Timer timer = new Timer();
         sendMessage("chat;Server: Starting GAME !");

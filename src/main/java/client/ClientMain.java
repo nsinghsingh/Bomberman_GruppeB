@@ -8,16 +8,17 @@ import java.net.Socket;
 
 public class ClientMain extends Thread {
 
-    protected Socket socket;
-    String ip = "127.0.0.1"; // localhost
-    int port = 4456;
-    DataOutputStream dOut = null;
-    DataInputStream dIn = null;
+    private Socket socket;
+    private String ip = "127.0.0.1"; // localhost
+    private int port = 4456;
+    private DataOutputStream dOut = null;
+    private DataInputStream dIn = null;
     public String username;
     public Lobby lobby;
     public int clientID;
     private boolean isConnected;
 
+    //Tries to connect to The server with the port and Ip
     public ClientMain(String username, Lobby lobby) {
         this.lobby = lobby;
         this.username = username;
@@ -31,6 +32,7 @@ public class ClientMain extends Thread {
         }
     }
 
+    //Checks if client is Connected to a Server
     public boolean IsconnectedToServer() {
         if (isConnected) {
             return true;
@@ -39,6 +41,7 @@ public class ClientMain extends Thread {
         }
     }
 
+    //Always listens to the Server messages
     public void run() {
         while (true) {
             //Looping Thread
@@ -62,7 +65,8 @@ public class ClientMain extends Thread {
         try {
             dIn = new DataInputStream(socket.getInputStream());
             String k = dIn.readUTF();
-            //0 index = method call | 1 index = message
+            //Since we only get a String and no Objects or any values we have to extract them with a Split.
+            //0 index = method call | 1 index = message | 2 index = playerID
             String[] methodAndMessage = k.split(";");
             methodAndMessages(methodAndMessage);
 
@@ -72,6 +76,10 @@ public class ClientMain extends Thread {
 
     }
 
+    /*
+    gets the Extracted strings and it then will first check the first index which is the Method
+    and will choose which method will be called
+     */
     public void methodAndMessages(String[] methodAndMessage) {
         String playerId = "";
         String message = "";
@@ -95,15 +103,19 @@ public class ClientMain extends Thread {
             case "clientID":
                 clientID = Integer.parseInt(message);
                 break;
+
             case "method":
+                //is the actual playermovement
                 playerAction(message, Integer.parseInt(playerId));
+                break;
+            default:
                 break;
 
         }
     }
 
+    //will send back the action like: w,a,s,d,n,k,b and the playerID which did the action.
     public void playerAction(String action, int playerId) {
-        System.out.println("the message is:" + action);
         lobby.labyrinth.updateLabyrinth(action, playerId);
     }
 }

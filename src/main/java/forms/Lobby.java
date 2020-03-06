@@ -20,10 +20,15 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
     Boolean isInChatField = false;
 
     public static void main(String[] args) {
-        //Currently Creating 4 User to test The game
+        /*
+        Lobby lobby = new Lobby();
+        lobby.initJFrame();
+         */
+
+        //Currently Creating 4 User to test The game can be replaced with the Code above
         for (int i = 0; i < 4; i++) {
             Lobby lobby = new Lobby();
-            lobby.testStuff();
+            lobby.initJFrame();
         }
     }
 
@@ -34,7 +39,7 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
         chatField.addKeyListener(this);
     }
 
-    public void testStuff() {
+    public void initJFrame() {
         Dimension maxSize = new Dimension(3840, 2160);
         Dimension prefSize = new Dimension(1280, 720);
         Dimension minSize = new Dimension(1070, 720);
@@ -51,7 +56,6 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
 
     public void startGame(ClientMain client) {
         frame.setVisible(false);
-        System.out.println("Gamestart");
         labyrinth = new Labyrinth(client);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(labyrinth.getLabyrinth());
@@ -63,16 +67,17 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //When the player clicks on the Join button to join a Server
         if (e.getSource() == joinButton) {
             if (client == null) {
                 //join button
                 client = new ClientMain(usernameTextField.getText(), this);
                 client.start();
                 if (client.IsconnectedToServer()) {
-                    //is Connected to server/game --> do something
+                    //is Connected to server/game
                     writeToServer("chat;", usernameTextField.getText() + " Joined!");
                 } else {
-                    //isnt connected to server --> do something
+                    //isn't connected to server set the client to null to remove any Pointers and will be collected by the garbage collector.
                     client = null;
                 }
             }
@@ -100,32 +105,14 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
         }
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
+    //Write in the chatbox appends the message
     public void writeInChat(String message) {
         System.out.println(message);
         chatArea.append(message + "\n");
 
     }
 
+    //requests a message to the Server
     public void writeToServer(String type, String message) {
         if (client != null) {
             System.out.println("wroteToServer");
@@ -133,27 +120,42 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
         }
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
+    //Keypress on Username to reset it to nothing when it's still default
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             if (isInChatField) {
                 if (client != null) {
                     writeToServer("chat;", client.username + ": " + chatField.getText());
-
                 }
             }
             chatField.setText("");
         }
-
     }
 
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
     @Override
     public void keyReleased(KeyEvent e) {
+
+    }
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }
