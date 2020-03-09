@@ -1,6 +1,5 @@
 package tiles;
 
-import forms.Labyrinth;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,12 +37,12 @@ public class Player extends BasicTile{
                 setYPosition(50);
                 break;
             case 1:
-                initial = "blue/Blue";
+                initial = "red/R";
                 setXPosition(1000);
                 setYPosition(50);
                 break;
             case 2:
-                initial = "red/R";
+                initial = "blue/Blue";
                 setXPosition(50);
                 setYPosition(500);
                 break;
@@ -76,8 +75,8 @@ public class Player extends BasicTile{
 
     public void playerMove(){
         if(!getDirection().equals("n")) {
-            int targetIndex = getTargetX() / getSize().width + getTargetY() / getSize().height * 22;
-            int originIndex = getXPosition() / getSize().width + getYPosition() / getSize().height * 22;
+            int targetIndex = targetX / getSize().width + targetY / getSize().height * 22;
+            int originIndex = xPosition / getSize().width + yPosition / getSize().height * 22;
             Component[] components = field.getComponents();
             field.removeAll();
             Component temp = components[targetIndex];
@@ -87,34 +86,34 @@ public class Player extends BasicTile{
                 field.add(component);
             }
             field.validate();
-            setXPosition(getTargetX());
-            setYPosition(getTargetY());
+            setXPosition(targetX);
+            setYPosition(targetY);
         }
     }
 
     public void setDirection(String direction){
         int width = getSize().width;
         int height = getSize().height;
-        setTargetY(getYPosition());
-        setTargetX(getXPosition());
+        setTargetY(yPosition);
+        setTargetX(xPosition);
         switch(direction){
             case "w":
-                setTargetY(getYPosition() - height);
+                setTargetY(yPosition - height);
                 break;
             case "a":
-                setTargetX(getXPosition() - width);
+                setTargetX(xPosition - width);
                 break;
             case "s":
-                setTargetY(getYPosition() + height);
+                setTargetY(yPosition + height);
                 break;
             case "d":
-                setTargetX(getXPosition() + width);
+                setTargetX(xPosition + width);
                 break;
             default:
                 this.direction = "n";
         }
         try{
-            int targetIndex = getTargetX() / getSize().width + getTargetY() / getSize().height * 22;
+            int targetIndex = targetX / getSize().width + targetY / getSize().height * 22;
             BasicTile targetTile = (BasicTile) field.getComponent(targetIndex);
             if(!targetTile.isSolid()){
                 this.direction = direction;
