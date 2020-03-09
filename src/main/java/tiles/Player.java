@@ -14,7 +14,6 @@ public class Player extends BasicTile{
     @Getter @Setter private int yPosition;
     @Getter @Setter private int targetX;
     @Getter @Setter private int targetY;
-    @Getter @Setter private JLabel playerSprite;
     @Getter private String direction = "n";
     @Getter @Setter private JPanel field;
     @Getter @Setter private boolean isDead;
@@ -25,7 +24,7 @@ public class Player extends BasicTile{
         setField(field);
         setSolid(true);
         setDestroyable(true);
-        setImagePath("../sprites/tiles/Grass1.png");
+        setFieldImagePath("../sprites/tiles/Grass1.png");
     }
 
     public void setPlayer(int playerIndex){
@@ -62,14 +61,11 @@ public class Player extends BasicTile{
         ImageIcon downSprite = new ImageIcon(bDown);
         ImageIcon rightSprite = new ImageIcon(bRight);
         ImageIcon leftSprite = new ImageIcon(bLeft);
-        setPlayerSprite(new JLabel(standSprite, JLabel.CENTER));
-        playerSprite.setMinimumSize(new Dimension(50, 50));
-        getFieldSprite().setLayout(new BorderLayout());
-        getFieldSprite().add(playerSprite);
+        setUpperSprite(new JLabel(standSprite, JLabel.CENTER));
     }
 
     @Override
-    public BasicTile clone(){
+    public BasicTile getCopy(){
         return new Player(field);
     }
 

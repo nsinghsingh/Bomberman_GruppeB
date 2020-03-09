@@ -13,7 +13,8 @@ public class Bomb extends BasicTile{
     private Bomb(){
         setSolid(true);
         setDestroyable(true);
-        setImagePath("../sprites/bomb/Bomb.gif");
+        setFieldImagePath("../sprites/tiles/Grass1.png");
+        setUpperImagePath("../sprites/bomb/Bomb.gif");
     }
 
     public Bomb(Labyrinth labyrinth){
@@ -28,6 +29,11 @@ public class Bomb extends BasicTile{
         setTimer(timer);
         setRadius(radius);
         setLabyrinth(labyrinth);
+    }
+
+    @Override
+    public BasicTile getCopy() {
+        return new Bomb();
     }
 
     public void explode(){
