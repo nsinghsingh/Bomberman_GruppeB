@@ -142,4 +142,9 @@ public class Player extends BasicTile{
 
         }
     }
+
+    @Override
+    public void explode() {
+
+    }
 }

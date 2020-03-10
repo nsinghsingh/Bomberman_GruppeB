@@ -59,4 +59,8 @@ public class BasicTile extends JPanel{
         ImageIcon sprite = new ImageIcon(ground);
         setUpperSprite(new JLabel(sprite, JLabel.CENTER));
     }
+
+    public void explode(int rotation, int range){
+
+    }
 }

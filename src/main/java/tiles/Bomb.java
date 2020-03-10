@@ -17,6 +17,7 @@ public class Bomb extends BasicTile{
         setDestroyable(true);
         setFieldImagePath("../sprites/tiles/Grass1.png");
         setUpperImagePath("../sprites/bomb/Bomb.gif");
+        countdown(timer);
     }
 
     public Bomb(JPanel labyrinth){
@@ -38,8 +39,9 @@ public class Bomb extends BasicTile{
         return new Bomb(timer, radius, labyrinth);
     }
 
-    public void explode(){
-        countdown(timer);
+    @Override
+    public void explode() {
+
     }
 
     public void countdown(int seconds){

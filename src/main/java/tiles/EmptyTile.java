@@ -12,4 +12,10 @@ public class EmptyTile extends BasicTile{
     public BasicTile getCopy() {
         return new EmptyTile();
     }
+
+    @Override
+    public void explode(int rotation, int range) {
+        if(range == 1)
+        setUpperImagePath("");
+    }
 }
