@@ -129,19 +129,79 @@ public class Player extends BasicTile{
         }
     }
 
-//    public void bombPlacement(){
-//    }
+    public void placeBomb(){
+        Bomb bombId = new Bomb();
+        bombId.setBombX(getXPosition());
+        bombId.setBombY(getYPosition());
 
-    public void placeBomb(String placement){
-        int placedBomb = 1;
-//      Bomb numBomb = new JPanel();
-//      getXPosition() + getYPosition();
-        switch(placement){
-            case "e":
-                isDead = true;
-                die();
-                break;
+        int width = getSize().width;
+        int height = getSize().height;
+
+        int bombUp = bombId.getBombY() - height;
+        int bombUDown = bombId.getBombY() + height;
+        int bombLeft = bombId.getBombX() - width;
+        int bombRight = bombId.getBombX() + width;
+
+
+        if (bombId.isExploded()){
+            bombId.setExploded(false);
+            try{
+                int targetIndexUp = bombId.getBombX() / getSize().width + bombUp / getSize().height * 22;
+                BasicTile targetTileUp = (BasicTile) field.getComponent(targetIndexUp);
+                int targetIndexDown = bombId.getBombX() / getSize().width + bombUDown / getSize().height * 22;
+                BasicTile targetTileDown = (BasicTile) field.getComponent(targetIndexDown);
+                int targetIndexLeft = bombLeft / getSize().width + bombId.getBombY() / getSize().height * 22;
+                BasicTile targetTileLeft = (BasicTile) field.getComponent(targetIndexLeft);
+                int targetIndexRight = bombRight / getSize().width + bombId.getBombY() / getSize().height * 22;
+                BasicTile targetTileRight = (BasicTile) field.getComponent(targetIndexRight);
+
+                if(!targetTileUp.isSolid()){
+                    getFieldSprite().add(bombId);
+//                    field.add(bombId);
+                } else if (!targetTileDown.isSolid()) {
+                    getFieldSprite().add(bombId);
+//                    field.add(bombId);
+                } else if (!targetTileLeft.isSolid()) {
+                    getFieldSprite().add(bombId);
+//                    field.add(bombId);
+                } else {
+                    getFieldSprite().add(bombId);
+//                    field.add(bombId);
+                }
+
+                getFieldSprite().validate();
+            }
+            catch (Exception ignored){
+                System.out.println("error");
+            }
         }
+//
+//        if(!getDirection().equals("n")) {
+//            int targetIndex = getTargetX() / getSize().width + getTargetY() / getSize().height * 22;
+//            int originIndex = getXPosition() / getSize().width + getYPosition() / getSize().height * 22;
+//            Component[] components = field.getComponents();
+//            field.removeAll();
+//            Component temp = components[targetIndex];
+//            components[targetIndex] = components[originIndex];
+//            components[originIndex] = temp;
+//            for (Component component : components) {
+//                field.add(component);
+//            }
+//            field.validate();
+//            setXPosition(getTargetX());
+//            setYPosition(getTargetY());
+//        }
+
+
+//        String placement
+//      Bomb numBomb = new JPanel();
+
+//        switch(placement){
+//            case "b":
+//                isDead = true;
+//                die();
+//                break;
+//        }
     }
 
     public void die(){
