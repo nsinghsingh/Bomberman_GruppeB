@@ -25,7 +25,9 @@ public class BasicTile extends JPanel{
         newTile.setDestroyable(isDestroyable());
         newTile.setFieldImagePath(getFieldImagePath());
         newTile.setBackground(getBackground());
-        newTile.setUpperSprite(getUpperSprite());
+        if(getUpperSprite() != null){
+            newTile.setUpperSprite(getUpperSprite());
+        }
         return newTile;
     }
 

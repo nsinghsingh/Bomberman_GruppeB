@@ -18,6 +18,7 @@ public class Player extends BasicTile{
     @Getter @Setter private JPanel field;
     @Getter @Setter private boolean isDead;
     @Getter @Setter private ImageIcon sprite;
+    Component temp;
 
     public Player(JPanel field){
         setLayout(new BorderLayout());
@@ -71,11 +72,14 @@ public class Player extends BasicTile{
 
     public void playerMove(){
         if(!getDirection().equals("n")) {
+            getUpperSprite().removeAll();
             int targetIndex = targetX / getSize().width + targetY / getSize().height * 22;
             int originIndex = xPosition / getSize().width + yPosition / getSize().height * 22;
             Component[] components = field.getComponents();
             field.removeAll();
-            Component temp = components[targetIndex];
+            if(temp == null){
+                temp = components[targetIndex];
+            }
             components[targetIndex] = components[originIndex];
             components[originIndex] = temp;
             for (Component component : components) {
@@ -84,6 +88,7 @@ public class Player extends BasicTile{
             field.validate();
             setXPosition(targetX);
             setYPosition(targetY);
+            temp = null;
         }
     }
 
@@ -124,7 +129,13 @@ public class Player extends BasicTile{
         }
     }
 
-    public void placeBomb(){ }
+    public void placeBomb(){
+        temp = new Bomb(field);
+        getUpperSprite().setLayout(new BorderLayout());
+        URL ground = getClass().getResource("../sprites/bomb/Bomb.gif");
+        ImageIcon sprite = new ImageIcon(ground);
+        getUpperSprite().add(new JLabel(sprite, JLabel.CENTER));
+    }
 
     public void die(){
         if (isDead = true) {

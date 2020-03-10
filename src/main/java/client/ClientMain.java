@@ -103,7 +103,6 @@ public class ClientMain extends Thread {
             case "clientID":
                 clientID = Integer.parseInt(message);
                 break;
-
             case "method":
                 //is the actual playermovement
                 playerAction(message, Integer.parseInt(playerId));

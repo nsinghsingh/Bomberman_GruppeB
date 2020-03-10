@@ -4,11 +4,13 @@ import forms.Labyrinth;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.swing.*;
+
 public class Bomb extends BasicTile{
 
     @Getter @Setter private int timer;
     @Getter @Setter private int radius;
-    @Getter @Setter private Labyrinth labyrinth;
+    @Getter @Setter private JPanel labyrinth;
 
     private Bomb(){
         setSolid(true);
@@ -17,14 +19,14 @@ public class Bomb extends BasicTile{
         setUpperImagePath("../sprites/bomb/Bomb.gif");
     }
 
-    public Bomb(Labyrinth labyrinth){
+    public Bomb(JPanel labyrinth){
         this();
         setTimer(3);
         setRadius(2);
         setLabyrinth(labyrinth);
     }
 
-    public Bomb(int timer, int radius, Labyrinth labyrinth){
+    public Bomb(int timer, int radius, JPanel labyrinth){
         this();
         setTimer(timer);
         setRadius(radius);
@@ -33,7 +35,7 @@ public class Bomb extends BasicTile{
 
     @Override
     public BasicTile getCopy() {
-        return new Bomb();
+        return new Bomb(timer, radius, labyrinth);
     }
 
     public void explode(){
