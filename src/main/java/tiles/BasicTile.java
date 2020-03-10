@@ -9,8 +9,6 @@ import java.net.URL;
 
 public class BasicTile extends JPanel{
 
-    //TODO figure out how to save images and configure JPanels
-
     @Getter @Setter private boolean isSolid;
     @Getter @Setter private boolean isDestroyable;
     @Getter private JLabel fieldSprite;
