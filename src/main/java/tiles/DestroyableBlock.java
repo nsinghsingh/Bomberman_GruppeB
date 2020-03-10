@@ -12,9 +12,4 @@ public class DestroyableBlock extends BasicTile{
     public BasicTile getCopy() {
         return new DestroyableBlock();
     }
-
-    @Override
-    public void explode() {
-
-    }
 }

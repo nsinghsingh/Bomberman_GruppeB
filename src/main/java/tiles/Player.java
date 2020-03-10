@@ -18,7 +18,8 @@ public class Player extends BasicTile{
     @Getter @Setter private JPanel field;
     @Getter @Setter private boolean isDead;
     @Getter @Setter private ImageIcon sprite;
-    Component temp;
+    private Component temp;
+    public int bombsPlaced;
 
     public Player(JPanel field){
         setLayout(new BorderLayout());
@@ -130,21 +131,19 @@ public class Player extends BasicTile{
     }
 
     public void placeBomb(){
-        temp = new Bomb(field);
-        getUpperSprite().setLayout(new BorderLayout());
-        URL ground = getClass().getResource("../sprites/bomb/Bomb.gif");
-        ImageIcon sprite = new ImageIcon(ground);
-        getUpperSprite().add(new JLabel(sprite, JLabel.CENTER));
+        if (bombsPlaced < 1){
+            temp = new Bomb(field, this);
+            getUpperSprite().setLayout(new BorderLayout());
+            URL ground = getClass().getResource("../sprites/bomb/Bomb.gif");
+            ImageIcon sprite = new ImageIcon(ground);
+            getUpperSprite().add(new JLabel(sprite, JLabel.CENTER));
+            bombsPlaced++;
+        }
     }
 
     public void die(){
         if (isDead = true) {
 
         }
-    }
-
-    @Override
-    public void explode() {
-
     }
 }
