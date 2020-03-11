@@ -9,8 +9,8 @@ import java.net.Socket;
 public class ClientMain extends Thread {
 
     private Socket socket;
-    private String ip = "127.0.0.1"; // localhost
-    private int port = 4456;
+    private String ip = "192.168.11.132"; // localhost
+    private int port = 21;
     private DataOutputStream dOut = null;
     private DataInputStream dIn = null;
     public String username;
@@ -22,12 +22,12 @@ public class ClientMain extends Thread {
     public ClientMain(String username, Lobby lobby) {
         this.lobby = lobby;
         this.username = username;
-        System.out.println("Client created");
         try {
             socket = new Socket(ip, port);
             isConnected = true;
+            System.out.println("Client created");
         } catch (Exception ignored) {
-            System.out.println("failed created");
+            System.out.println("failed to create client");
             isConnected = false;
         }
     }
@@ -71,7 +71,7 @@ public class ClientMain extends Thread {
             methodAndMessages(methodAndMessage);
 
         } catch (Exception e) {
-            System.out.println("failedToGet MSG");
+            System.out.println("Client failed to get Message");
         }
 
     }

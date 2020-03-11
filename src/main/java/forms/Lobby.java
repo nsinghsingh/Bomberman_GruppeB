@@ -25,7 +25,7 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
         lobby.initJFrame();
          */
 
-        //Currently Creating 4 User to test The game can be replaced with the Code above
+        //Currently Creating 4 User to simulate The game can be replaced with the Code above
         for (int i = 0; i < 4; i++) {
             Lobby lobby = new Lobby();
             lobby.initJFrame();
@@ -72,8 +72,9 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
             if (client == null) {
                 //join button
                 client = new ClientMain(usernameTextField.getText(), this);
-                client.start();
                 if (client.IsconnectedToServer()) {
+                    //starts the Clients Thread
+                    client.start();
                     //is Connected to server/game
                     writeToServer("chat;", usernameTextField.getText() + " Joined!");
                 } else {
