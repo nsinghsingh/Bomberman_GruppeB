@@ -66,7 +66,14 @@ public class Bomb extends BasicTile{
         for (int i = 0; i < radius * 2 + 1; i++) {
             int position = xPosition - radius + i + yPosition * 22;
             if((xPosition - radius + i) > 0 && (xPosition - radius + i) < 22){
-                BasicTile tile = (BasicTile) labyrinth.getComponent(position);
+                BasicTile tile;
+                try {
+                    tile = (BasicTile) labyrinth.getComponent(position);
+                }
+                catch (Exception e){
+                    counter.restart();
+                    return;
+                }
                 if(tile.isDestroyable() || !tile.isSolid()){
                     if(i < 2){
                         tile.explode(270, i);
@@ -80,7 +87,14 @@ public class Bomb extends BasicTile{
         for (int i = 0; i < radius * 2 + 1; i++) {
             int position = xPosition + (yPosition - radius + i) * 22;
             if((yPosition - radius + i) > 0 && (yPosition - radius + i) < 12){
-                BasicTile tile = (BasicTile) labyrinth.getComponent(position);
+                BasicTile tile;
+                try {
+                    tile = (BasicTile) labyrinth.getComponent(position);
+                }
+                catch (Exception e){
+                    counter.restart();
+                    return;
+                }
                 if(tile.isDestroyable() || !tile.isSolid()){
                     if(i < 2){
                         tile.explode(0, i);
