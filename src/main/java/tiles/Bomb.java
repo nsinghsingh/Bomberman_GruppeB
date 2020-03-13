@@ -17,6 +17,7 @@ public class Bomb extends BasicTile{
     @Getter @Setter private int xPosition;
     @Getter @Setter private int yPosition;
     private Timer counter;
+    private boolean hasExploded;
 
     private Bomb(){
         setLayout(new BorderLayout());
@@ -97,6 +98,7 @@ public class Bomb extends BasicTile{
 
     public void explodeCenter(){
         player.bombsPlaced -= 1;
+        hasExploded = true;
         setUpperImagePath("../sprites/bomb/ExpMid.png");
         counter = new Timer(0, e -> {
             int position = xPosition + yPosition * 22;
@@ -117,7 +119,9 @@ public class Bomb extends BasicTile{
 
     @Override
     public void explode(int rotation, int range) {
-        counter.stop();
-        explodeAround();
+        if(!hasExploded){
+            counter.stop();
+            explodeAround();
+        }
     }
 }
