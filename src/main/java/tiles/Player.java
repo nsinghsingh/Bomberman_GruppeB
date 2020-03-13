@@ -20,6 +20,7 @@ public class Player extends BasicTile{
     @Getter @Setter private Labyrinth labyrinth;
     @Getter @Setter private boolean isDead;
     @Getter @Setter private ImageIcon sprite;
+    @Getter @Setter private int playerIndex;
     private Component temp;
     public int bombsPlaced;
 
@@ -33,7 +34,8 @@ public class Player extends BasicTile{
     }
 
     public void setPlayer(int playerIndex){
-        String initial = "";
+        setPlayerIndex(playerIndex);
+        String initial;
         switch (playerIndex){
             case 0:
                 initial = "black/B";
@@ -139,11 +141,14 @@ public class Player extends BasicTile{
     @Override
     public void explode(int rotation, int range) {
         super.explode(rotation, range);
-        //die(); TODO fix death
+        if(labyrinth.getCLIENT_ID() == playerIndex){
+            labyrinth.getCLIENT().sendMessage("method;k;" + labyrinth.getCLIENT_ID());
+        }
     }
 
     public void die(){
         if (!isDead) {
+            setDead(true);
             Component[] components = field.getComponents();
             field.removeAll();
             int originIndex = xPosition / getSize().width + yPosition / getSize().height * 22;
@@ -152,7 +157,6 @@ public class Player extends BasicTile{
                 field.add(component);
             }
             field.validate();
-            labyrinth.getCLIENT().sendMessage("method;k;" + labyrinth.getCLIENT_ID());
         }
     }
 }

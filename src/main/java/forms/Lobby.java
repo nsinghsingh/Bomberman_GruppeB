@@ -26,7 +26,7 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
          */
 
         //Currently Creating 4 User to simulate The game can be replaced with the Code above
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 4; i++) {
             Lobby lobby = new Lobby();
             lobby.initJFrame();
         }

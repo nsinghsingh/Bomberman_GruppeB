@@ -15,9 +15,9 @@ public final class ServerMain {
     private static int count;
     private static DataInputStream dIn = null;
     private static DataOutputStream dOut = null;
-    private static ArrayList<Socket> clientSocketList = new ArrayList<Socket>(4);
+    private static ArrayList<Socket> clientSocketList = new ArrayList<>(4);
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         //Creates the server which Clients will join and play on
         ServerSocket serverSocket = null;
         currPlayercount = 0;
@@ -29,14 +29,14 @@ public final class ServerMain {
 
         //Loops all the Time and checks for any client requests
         while (true) {
-            if (currPlayercount < 1) {
+            if (currPlayercount < 4) {
                 try {
                     Socket newClient = serverSocket.accept();
                     clientSocketList.add(newClient);
                     sendIdMessage("clientID;" + currPlayercount, newClient);
                     currPlayercount++;
                     receiveMessage();
-                    if (currPlayercount == 1) {
+                    if (currPlayercount == 4) {
                         countDown();
                     }
                 } catch (Exception ignore) {
