@@ -7,9 +7,15 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ *This Class handels the Connection between the server and client
+ * The server will always listen to incomming requests of the Client.
+ * They will be send back to all the clients which then will further use them.
+ * for example: Client1 sends a message the server will listen to that and sends it right back to all 4 Clients.
+ * */
+
 public final class ServerMain {
 
-    private static ServerMain INSTANCE;
     private static final int PORT = 21;
     private static int currPlayercount;
     private static int count;
@@ -45,14 +51,6 @@ public final class ServerMain {
             //after 4 players are connected. Always listens for Requests
             receiveMessage();
         }
-    }
-
-    //Singleton
-    public static ServerMain getInstance() {
-        if (ServerMain.INSTANCE == null) {
-            ServerMain.INSTANCE = new ServerMain();
-        }
-        return ServerMain.INSTANCE;
     }
 
     /*
