@@ -1,10 +1,18 @@
 package client;
 
 import forms.Lobby;
-
-import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.Socket;
+
+
+/**
+ *This Class handels the Connection between the game of a Player and the Server
+ * They receive and send messages to communicate. These messages will be sent in a String that is like a syntax
+ * a Message will look like this 'method;message;playerID'. for example 'chat;Hello world!;3'
+ * This means the method is the chat which contains the Message: 'Hello world!'. and from whom the Message got sent.
+ * All these strings will be validated and chosen to be send to the game.
+ * */
+
 
 public class ClientMain extends Thread {
 
@@ -25,9 +33,7 @@ public class ClientMain extends Thread {
         try {
             socket = new Socket(ip, port);
             isConnected = true;
-            System.out.println("Client created");
-        } catch (Exception ignored) {
-            System.out.println("failed to create client");
+        } catch (Exception e) {
             isConnected = false;
         }
     }
@@ -56,8 +62,7 @@ public class ClientMain extends Thread {
             dOut = new DataOutputStream(socket.getOutputStream());
             dOut.writeUTF(message);
             dOut.flush();
-        } catch (Exception ignore) {
-        }
+        } catch (Exception ignore) { }
     }
 
     //receives a message from the server for all clients the same Message
@@ -70,14 +75,12 @@ public class ClientMain extends Thread {
             String[] methodAndMessage = k.split(";");
             methodAndMessages(methodAndMessage);
 
-        } catch (Exception e) {
-            System.out.println("Client failed to get Message");
-        }
+        } catch (Exception ignore) { }
 
     }
 
     /*
-    gets the Extracted strings and it then will first check the first index which is the Method
+    gets the Extracted strings and it then will first check the first index which is the Method, the second index the message and the third the player ID
     and will choose which method will be called
      */
     public void methodAndMessages(String[] methodAndMessage) {

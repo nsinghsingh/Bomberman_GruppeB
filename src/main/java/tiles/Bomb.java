@@ -6,6 +6,8 @@ import lombok.Setter;
 import javax.swing.*;
 import java.awt.*;
 
+/** A bomb tile which explodes and destroy any detroyable or player tiles**/
+
 public class Bomb extends BasicTile{
 
     @Getter @Setter private int timer;
@@ -15,6 +17,7 @@ public class Bomb extends BasicTile{
     @Getter @Setter private int xPosition;
     @Getter @Setter private int yPosition;
     private Timer counter;
+    private boolean hasExploded;
 
     private Bomb(){
         setLayout(new BorderLayout());
@@ -28,6 +31,8 @@ public class Bomb extends BasicTile{
         this(2,2, labyrinth, player);
     }
 
+    //Starts a timer for exploding as soon as it is initialized
+
     public Bomb(int timer, int radius, JPanel labyrinth, Player player){
         this();
         setTimer(timer);
@@ -39,10 +44,14 @@ public class Bomb extends BasicTile{
         countdown();
     }
 
+    //Override from parent so it returns a new object of type bomb instead of a basictile
+
     @Override
     public BasicTile getCopy() {
         return new Bomb(timer, radius, labyrinth, player);
     }
+
+    //Timer for exploding
 
     public void countdown(){
         counter = new Timer(0, evt -> explodeAround());
@@ -50,6 +59,8 @@ public class Bomb extends BasicTile{
         counter.setRepeats(false);
         counter.start();
     }
+
+    //Explodes all destroyable or non-solid tiles in the horizontal and vertical range of the bomb
 
     public void explodeAround(){
         for (int i = 0; i < radius * 2 + 1; i++) {
@@ -83,8 +94,11 @@ public class Bomb extends BasicTile{
         explodeCenter();
     }
 
+    //Explodes itself and after some time it replaces the tile on which it is with an empty tile
+
     public void explodeCenter(){
         player.bombsPlaced -= 1;
+        hasExploded = true;
         setUpperImagePath("../sprites/bomb/ExpMid.png");
         counter = new Timer(0, e -> {
             int position = xPosition + yPosition * 22;
@@ -101,9 +115,13 @@ public class Bomb extends BasicTile{
         counter.start();
     }
 
+    //Stops the timer and makes it blow up instantly
+
     @Override
     public void explode(int rotation, int range) {
-        counter.stop();
-        explodeAround();
+        if(!hasExploded){
+            counter.stop();
+            explodeAround();
+        }
     }
 }
