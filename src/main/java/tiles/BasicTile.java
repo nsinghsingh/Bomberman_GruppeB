@@ -36,7 +36,7 @@ public class BasicTile extends JPanel{
     public void setFieldSprite(JLabel label){
         this.fieldSprite = label;
         fieldSprite.setMinimumSize(new Dimension(50, 50));
-        fieldSprite.setPreferredSize(new Dimension(50, 50));
+        removeAll();
         add(fieldSprite);
     }
 
@@ -50,8 +50,8 @@ public class BasicTile extends JPanel{
     public void setUpperSprite(JLabel label){
         this.upperSprite = label;
         upperSprite.setMinimumSize(new Dimension(50, 50));
-        upperSprite.setPreferredSize(new Dimension(50, 50));
         fieldSprite.setLayout(new BorderLayout());
+        fieldSprite.removeAll();
         fieldSprite.add(upperSprite);
     }
 
@@ -65,7 +65,7 @@ public class BasicTile extends JPanel{
     public void explode(int rotation, int range) {
         String section = "";
         if(range == 1){
-            section = "Mid";
+            section = "Side";
         }
         else{
             section = "End";
@@ -85,6 +85,14 @@ public class BasicTile extends JPanel{
                 degree = "Left";
                 break;
         }
-        setUpperImagePath("../sprites/bomb/Exp" + section + degree + ".gif");
+        setUpperImagePath("../sprites/bomb/Exp" + section + degree + ".png");
+        Timer timer = new Timer(0, e -> {
+            fieldSprite.removeAll();
+            fieldSprite.validate();
+            fieldSprite.repaint();
+        });
+        timer.setInitialDelay(2000);
+        timer.setRepeats(false);
+        timer.start();
     }
 }

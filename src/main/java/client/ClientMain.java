@@ -72,6 +72,7 @@ public class ClientMain extends Thread {
 
         } catch (Exception e) {
             System.out.println("failedToGet MSG");
+            System.out.println(e.getLocalizedMessage());
         }
 
     }

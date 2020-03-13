@@ -12,4 +12,12 @@ public class DestroyableBlock extends BasicTile{
     public BasicTile getCopy() {
         return new DestroyableBlock();
     }
+
+    @Override
+    public void explode(int rotation, int range) {
+        super.explode(rotation, range);
+        setSolid(false);
+        setDestroyable(false);
+        setFieldImagePath("../sprites/tiles/BurnedStoneGrass.png");
+    }
 }

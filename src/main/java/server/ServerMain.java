@@ -28,14 +28,14 @@ public class ServerMain {
 
         //Loops all the Time and checks for any client requests
         while (true) {
-            if (currPlayercount < 4) {
+            if (currPlayercount < 1) {
                 try {
                     Socket newClient = serverSocket.accept();
                     clientSocketList.add(newClient);
                     sendIdMessage("clientID;" + currPlayercount, newClient);
                     currPlayercount++;
                     receiveMessage();
-                    if (currPlayercount == 4) {
+                    if (currPlayercount == 1) {
                         countDown();
                     }
                 } catch (Exception ignore) {

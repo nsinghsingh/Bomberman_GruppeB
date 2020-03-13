@@ -20,13 +20,8 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
     Boolean isInChatField = false;
 
     public static void main(String[] args) {
-        /*
-        Lobby lobby = new Lobby();
-        lobby.initJFrame();
-         */
-
         //Currently Creating 4 User to test The game can be replaced with the Code above
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 1; i++) {
             Lobby lobby = new Lobby();
             lobby.initJFrame();
         }

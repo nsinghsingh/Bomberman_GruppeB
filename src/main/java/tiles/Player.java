@@ -1,5 +1,6 @@
 package tiles;
 
+import forms.Labyrinth;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,14 +17,16 @@ public class Player extends BasicTile{
     @Getter @Setter private int targetY;
     @Getter private String direction = "n";
     @Getter @Setter private JPanel field;
+    @Getter @Setter private Labyrinth labyrinth;
     @Getter @Setter private boolean isDead;
     @Getter @Setter private ImageIcon sprite;
     private Component temp;
     public int bombsPlaced;
 
-    public Player(JPanel field){
+    public Player(Labyrinth labyrinth){
         setLayout(new BorderLayout());
-        setField(field);
+        setField(labyrinth.getGameRender());
+        setLabyrinth(labyrinth);
         setSolid(true);
         setDestroyable(true);
         setFieldImagePath("../sprites/tiles/Grass1.png");
@@ -53,22 +56,14 @@ public class Player extends BasicTile{
                 setYPosition(500);
                 break;
         }
-        URL bUp = getClass().getResource("../sprites/players/" + initial + "Back.gif");
-        URL bDown = getClass().getResource("../sprites/players/" + initial + "Front.gif");
-        URL bRight = getClass().getResource("../sprites/players/" + initial + "Right.gif");
-        URL bLeft = getClass().getResource("../sprites/players/" + initial + "Left.gif");
         URL bStand = getClass().getResource("../sprites/players/" + initial + "Stand.png");
         ImageIcon standSprite = new ImageIcon(bStand);
-        ImageIcon upSprite = new ImageIcon(bUp);
-        ImageIcon downSprite = new ImageIcon(bDown);
-        ImageIcon rightSprite = new ImageIcon(bRight);
-        ImageIcon leftSprite = new ImageIcon(bLeft);
         setUpperSprite(new JLabel(standSprite, JLabel.CENTER));
     }
 
     @Override
     public BasicTile getCopy(){
-        return new Player(field);
+        return new Player(labyrinth);
     }
 
     public void playerMove(){
@@ -134,16 +129,30 @@ public class Player extends BasicTile{
         if (bombsPlaced < 1){
             temp = new Bomb(field, this);
             getUpperSprite().setLayout(new BorderLayout());
-            URL ground = getClass().getResource("../sprites/bomb/Bomb.gif");
+            URL ground = getClass().getResource("../sprites/bomb/Bomb.png");
             ImageIcon sprite = new ImageIcon(ground);
             getUpperSprite().add(new JLabel(sprite, JLabel.CENTER));
             bombsPlaced++;
         }
     }
 
-    public void die(){
-        if (isDead = true) {
+    @Override
+    public void explode(int rotation, int range) {
+        super.explode(rotation, range);
+        die();
+    }
 
+    public void die(){
+        if (!isDead) {
+            Component[] components = field.getComponents();
+            field.removeAll();
+            int originIndex = xPosition / getSize().width + yPosition / getSize().height * 22;
+            components[originIndex] = new EmptyTile();
+            for (Component component : components) {
+                field.add(component);
+            }
+            field.validate();
+            labyrinth.getCLIENT().sendMessage("method;k;" + labyrinth.getCLIENT_ID());
         }
     }
 }
