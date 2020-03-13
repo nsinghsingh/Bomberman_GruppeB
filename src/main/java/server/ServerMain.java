@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ServerMain {
+public final class ServerMain {
 
-    private static final int PORT = 4456;
+    private static ServerMain INSTANCE;
+    private static final int PORT = 21;
     private static int currPlayercount;
     private static int count;
     private static DataInputStream dIn = null;
@@ -44,6 +45,14 @@ public class ServerMain {
             //after 4 players are connected. Always listens for Requests
             receiveMessage();
         }
+    }
+
+    //Singleton
+    public static ServerMain getInstance() {
+        if (ServerMain.INSTANCE == null) {
+            ServerMain.INSTANCE = new ServerMain();
+        }
+        return ServerMain.INSTANCE;
     }
 
     /*
