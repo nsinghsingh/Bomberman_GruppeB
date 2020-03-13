@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
+/** A tile which one of the clients can move with inputs. It can also place bombs and be destroyed **/
+
 public class Player extends BasicTile{
 
     @Getter @Setter private int xPosition;
@@ -24,6 +26,8 @@ public class Player extends BasicTile{
     private Component temp;
     public int bombsPlaced;
 
+    //Gets a reference to the field and the labyrinth class which is connected to a client
+
     public Player(Labyrinth labyrinth){
         setLayout(new BorderLayout());
         setField(labyrinth.getGameRender());
@@ -32,6 +36,8 @@ public class Player extends BasicTile{
         setDestroyable(true);
         setFieldImagePath("../sprites/tiles/Grass1.png");
     }
+
+    //Depending on playerIndex it will load a different image for the player
 
     public void setPlayer(int playerIndex){
         setPlayerIndex(playerIndex);
@@ -63,10 +69,17 @@ public class Player extends BasicTile{
         setUpperSprite(new JLabel(standSprite, JLabel.CENTER));
     }
 
+    //Returns an object of type player
+
     @Override
     public BasicTile getCopy(){
         return new Player(labyrinth);
     }
+
+    /*
+    Switches the player with the tile it is heading to, updates the position and loads the map again. If the variable
+    temp has a bomb in it, then it switches with the bomb instead of the tile thus placing the bomb
+     */
 
     public void playerMove(){
         if(!getDirection().equals("n")) {
@@ -89,6 +102,8 @@ public class Player extends BasicTile{
             temp = null;
         }
     }
+
+    //Gets the input from client through labyrinth and calculates wether it is possible to go there.
 
     public void setDirection(String direction){
         int width = getSize().width;
@@ -127,6 +142,11 @@ public class Player extends BasicTile{
         }
     }
 
+    /*
+    If the player hasn't placed the maximum amount of bombs it can then it sets temp to bomb and temporarily adds a
+    bomb on top of the player until he moves
+     */
+
     public void placeBomb(){
         if (bombsPlaced < 1){
             temp = new Bomb(field, this);
@@ -138,6 +158,8 @@ public class Player extends BasicTile{
         }
     }
 
+    //If the player who died is the same as the client then send a death message to the server
+
     @Override
     public void explode(int rotation, int range) {
         super.explode(rotation, range);
@@ -145,6 +167,8 @@ public class Player extends BasicTile{
             labyrinth.getCLIENT().sendMessage("method;k;" + labyrinth.getCLIENT_ID());
         }
     }
+
+    //Replaces the tile it was on with an empty tile and sets himself as dead
 
     public void die(){
         if (!isDead) {
