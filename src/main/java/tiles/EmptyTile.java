@@ -1,8 +1,11 @@
 package tiles;
 
+import java.awt.*;
+
 public class EmptyTile extends BasicTile{
 
     public EmptyTile(){
+        setLayout(new BorderLayout());
         setSolid(false);
         setDestroyable(false);
         setFieldImagePath("../sprites/tiles/Grass1.png");

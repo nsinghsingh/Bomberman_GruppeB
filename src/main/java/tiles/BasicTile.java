@@ -87,9 +87,7 @@ public class BasicTile extends JPanel{
         }
         setUpperImagePath("../sprites/bomb/Exp" + section + degree + ".png");
         Timer timer = new Timer(0, e -> {
-            fieldSprite.removeAll();
-            fieldSprite.validate();
-            fieldSprite.repaint();
+            setFieldImagePath("../sprites/tiles/Grass1.png");
         });
         timer.setInitialDelay(2000);
         timer.setRepeats(false);

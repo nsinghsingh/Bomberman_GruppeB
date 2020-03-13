@@ -18,6 +18,5 @@ public class DestroyableBlock extends BasicTile{
         super.explode(rotation, range);
         setSolid(false);
         setDestroyable(false);
-        setFieldImagePath("../sprites/tiles/BurnedStoneGrass.png");
     }
 }

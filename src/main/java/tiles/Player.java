@@ -139,7 +139,7 @@ public class Player extends BasicTile{
     @Override
     public void explode(int rotation, int range) {
         super.explode(rotation, range);
-        die();
+        //die(); TODO fix death
     }
 
     public void die(){
