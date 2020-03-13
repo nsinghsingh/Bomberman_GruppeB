@@ -1,46 +1,141 @@
 package tiles;
-import forms.Labyrinth;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.swing.*;
+import java.awt.*;
+
+/** A bomb tile which explodes and destroy any detroyable or player tiles**/
 
 public class Bomb extends BasicTile{
 
     @Getter @Setter private int timer;
     @Getter @Setter private int radius;
-    @Getter @Setter private Labyrinth labyrinth;
+    @Getter @Setter private JPanel labyrinth;
+    @Getter @Setter private Player player;
+    @Getter @Setter private int xPosition;
+    @Getter @Setter private int yPosition;
+    private Timer counter;
+    private boolean hasExploded;
 
     private Bomb(){
+        setLayout(new BorderLayout());
         setSolid(true);
         setDestroyable(true);
-        setImagePath("../sprites/bomb/Bomb.gif");
+        setFieldImagePath("../sprites/tiles/Grass1.png");
+        setUpperImagePath("../sprites/bomb/Bomb.png");
     }
 
-    public Bomb(Labyrinth labyrinth){
-        this();
-        setTimer(3);
-        setRadius(2);
-        setLabyrinth(labyrinth);
+    public Bomb(JPanel labyrinth, Player player){
+        this(2,2, labyrinth, player);
     }
 
-    public Bomb(int timer, int radius, Labyrinth labyrinth){
+    //Starts a timer for exploding as soon as it is initialized
+
+    public Bomb(int timer, int radius, JPanel labyrinth, Player player){
         this();
         setTimer(timer);
         setRadius(radius);
         setLabyrinth(labyrinth);
+        setPlayer(player);
+        setXPosition(player.getXPosition() / player.getSize().width);
+        setYPosition(player.getYPosition() / player.getSize().height);
+        countdown();
     }
 
-    public void explode(){
-        countdown(timer);
+    //Override from parent so it returns a new object of type bomb instead of a basictile
+
+    @Override
+    public BasicTile getCopy() {
+        return new Bomb(timer, radius, labyrinth, player);
     }
 
-    public void countdown(int seconds){
-        long startTime = System.currentTimeMillis() / 1000;
-        long elapsedTime = System.currentTimeMillis() / 1000 - startTime;
-        while(elapsedTime < seconds){
-            elapsedTime = System.currentTimeMillis() / 1000 - startTime;
+    //Timer for exploding
+
+    public void countdown(){
+        counter = new Timer(0, evt -> explodeAround());
+        counter.setInitialDelay(timer * 1000);
+        counter.setRepeats(false);
+        counter.start();
+    }
+
+    //Explodes all destroyable or non-solid tiles in the horizontal and vertical range of the bomb
+
+    public void explodeAround(){
+        for (int i = 0; i < radius * 2 + 1; i++) {
+            int position = xPosition - radius + i + yPosition * 22;
+            if((xPosition - radius + i) > 0 && (xPosition - radius + i) < 22){
+                BasicTile tile;
+                try {
+                    tile = (BasicTile) labyrinth.getComponent(position);
+                }
+                catch (Exception e){
+                    counter.restart();
+                    return;
+                }
+                if(tile.isDestroyable() || !tile.isSolid()){
+                    if(i < 2){
+                        tile.explode(270, i);
+                    }
+                    else if(i > 2){
+                        tile.explode(90, i % 2);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < radius * 2 + 1; i++) {
+            int position = xPosition + (yPosition - radius + i) * 22;
+            if((yPosition - radius + i) > 0 && (yPosition - radius + i) < 12){
+                BasicTile tile;
+                try {
+                    tile = (BasicTile) labyrinth.getComponent(position);
+                }
+                catch (Exception e){
+                    counter.restart();
+                    return;
+                }
+                if(tile.isDestroyable() || !tile.isSolid()){
+                    if(i < 2){
+                        tile.explode(0, i);
+                    }
+                    else if(i > 2){
+                        tile.explode(180, i % 2);
+                    }
+                }
+            }
+        }
+        explodeCenter();
+    }
+
+    //Explodes itself and after some time it replaces the tile on which it is with an empty tile
+
+    public void explodeCenter(){
+        player.bombsPlaced -= 1;
+        hasExploded = true;
+        setUpperImagePath("../sprites/bomb/ExpMid.png");
+        counter = new Timer(0, e -> {
+            int position = xPosition + yPosition * 22;
+            Component[] components = labyrinth.getComponents();
+            labyrinth.removeAll();
+            components[position] = new EmptyTile();
+            for (Component component : components) {
+                labyrinth.add(component);
+            }
+            labyrinth.validate();
+        });
+        counter.setInitialDelay(1000);
+        counter.setRepeats(false);
+        counter.start();
+    }
+
+    //Stops the timer and makes it blow up instantly
+
+    @Override
+    public void explode(int rotation, int range) {
+        if(!hasExploded){
+            counter.stop();
+            explodeAround();
         }
     }
-
-    //TODO figure out how to summon the explosion
 }

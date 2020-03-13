@@ -1,16 +1,24 @@
 package client;
 
 import forms.Lobby;
-
-import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.Socket;
+
+
+/**
+ *This Class handels the Connection between the game of a Player and the Server
+ * They receive and send messages to communicate. These messages will be sent in a String that is like a syntax
+ * a Message will look like this 'method;message;playerID'. for example 'chat;Hello world!;3'
+ * This means the method is the chat which contains the Message: 'Hello world!'. and from whom the Message got sent.
+ * All these strings will be validated and chosen to be send to the game.
+ * */
+
 
 public class ClientMain extends Thread {
 
     private Socket socket;
     private String ip = "127.0.0.1"; // localhost
-    private int port = 4456;
+    private int port = 21;
     private DataOutputStream dOut = null;
     private DataInputStream dIn = null;
     public String username;
@@ -22,12 +30,10 @@ public class ClientMain extends Thread {
     public ClientMain(String username, Lobby lobby) {
         this.lobby = lobby;
         this.username = username;
-        System.out.println("Client created");
         try {
             socket = new Socket(ip, port);
             isConnected = true;
-        } catch (Exception ignored) {
-            System.out.println("failed created");
+        } catch (Exception e) {
             isConnected = false;
         }
     }
@@ -56,8 +62,7 @@ public class ClientMain extends Thread {
             dOut = new DataOutputStream(socket.getOutputStream());
             dOut.writeUTF(message);
             dOut.flush();
-        } catch (Exception ignore) {
-        }
+        } catch (Exception ignore) { }
     }
 
     //receives a message from the server for all clients the same Message
@@ -70,14 +75,12 @@ public class ClientMain extends Thread {
             String[] methodAndMessage = k.split(";");
             methodAndMessages(methodAndMessage);
 
-        } catch (Exception e) {
-            System.out.println("failedToGet MSG");
-        }
+        } catch (Exception ignore) { }
 
     }
 
     /*
-    gets the Extracted strings and it then will first check the first index which is the Method
+    gets the Extracted strings and it then will first check the first index which is the Method, the second index the message and the third the player ID
     and will choose which method will be called
      */
     public void methodAndMessages(String[] methodAndMessage) {
@@ -103,7 +106,6 @@ public class ClientMain extends Thread {
             case "clientID":
                 clientID = Integer.parseInt(message);
                 break;
-
             case "method":
                 //is the actual playermovement
                 playerAction(message, Integer.parseInt(playerId));

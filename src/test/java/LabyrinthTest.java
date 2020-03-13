@@ -10,7 +10,7 @@ public class LabyrinthTest {
     public int[][] map = new int[12][22];
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         labyrinth = new Labyrinth(null);
         map[0] = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
         map[11] = map[0];

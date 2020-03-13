@@ -7,16 +7,23 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ServerMain {
+/**
+ *This Class handels the Connection between the server and client
+ * The server will always listen to incomming requests of the Client.
+ * They will be send back to all the clients which then will further use them.
+ * for example: Client1 sends a message the server will listen to that and sends it right back to all 4 Clients.
+ * */
 
-    private static final int PORT = 4456;
+public final class ServerMain {
+
+    private static final int PORT = 21;
     private static int currPlayercount;
     private static int count;
     private static DataInputStream dIn = null;
     private static DataOutputStream dOut = null;
-    private static ArrayList<Socket> clientSocketList = new ArrayList<Socket>(4);
+    private static ArrayList<Socket> clientSocketList = new ArrayList<>(4);
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         //Creates the server which Clients will join and play on
         ServerSocket serverSocket = null;
         currPlayercount = 0;

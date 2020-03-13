@@ -6,6 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * This class is the beginning entry of the Game. The Server needs to be started to play the game!
+ * Initialises the first Window
+ * On join creates a new Client, is the connection between the client and server not valid then the client will be set to null
+ */
+
 public class Lobby extends JFrame implements ActionListener, MouseListener, KeyListener {
     private JPanel Lobby;
     private JTextField usernameTextField;
@@ -20,12 +26,7 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
     Boolean isInChatField = false;
 
     public static void main(String[] args) {
-        /*
-        Lobby lobby = new Lobby();
-        lobby.initJFrame();
-         */
-
-        //Currently Creating 4 User to test The game can be replaced with the Code above
+        //Currently Creating 4 User to simulate the game
         for (int i = 0; i < 4; i++) {
             Lobby lobby = new Lobby();
             lobby.initJFrame();
@@ -70,10 +71,11 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
         //When the player clicks on the Join button to join a Server
         if (e.getSource() == joinButton) {
             if (client == null) {
-                //join button
+                //join button creates the client
                 client = new ClientMain(usernameTextField.getText(), this);
-                client.start();
                 if (client.IsconnectedToServer()) {
+                    //starts the Clients Thread
+                    client.start();
                     //is Connected to server/game
                     writeToServer("chat;", usernameTextField.getText() + " Joined!");
                 } else {
@@ -115,12 +117,11 @@ public class Lobby extends JFrame implements ActionListener, MouseListener, KeyL
     //requests a message to the Server
     public void writeToServer(String type, String message) {
         if (client != null) {
-            System.out.println("wroteToServer");
             client.sendMessage(type + message);
         }
     }
 
-    //Keypress on Username to reset it to nothing when it's still default
+
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {

@@ -9,28 +9,39 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
+/** A tile which one of the clients can move with inputs. It can also place bombs and be destroyed **/
+
 public class Player extends BasicTile{
 
     @Getter @Setter private int xPosition;
     @Getter @Setter private int yPosition;
     @Getter @Setter private int targetX;
     @Getter @Setter private int targetY;
-    @Getter @Setter private JLabel playerSprite;
     @Getter private String direction = "n";
     @Getter @Setter private JPanel field;
+    @Getter @Setter private Labyrinth labyrinth;
     @Getter @Setter private boolean isDead;
     @Getter @Setter private ImageIcon sprite;
+    @Getter @Setter private int playerIndex;
+    private Component temp;
+    public int bombsPlaced;
 
-    public Player(JPanel field){
+    //Gets a reference to the field and the labyrinth class which is connected to a client
+
+    public Player(Labyrinth labyrinth){
         setLayout(new BorderLayout());
-        setField(field);
+        setField(labyrinth.getGameRender());
+        setLabyrinth(labyrinth);
         setSolid(true);
         setDestroyable(true);
-        setImagePath("../sprites/tiles/Grass1.png");
+        setFieldImagePath("../sprites/tiles/Grass1.png");
     }
 
+    //Depending on playerIndex it will load a different image for the player
+
     public void setPlayer(int playerIndex){
-        String initial = "";
+        setPlayerIndex(playerIndex);
+        String initial;
         switch (playerIndex){
             case 0:
                 initial = "black/B";
@@ -38,12 +49,12 @@ public class Player extends BasicTile{
                 setYPosition(50);
                 break;
             case 1:
-                initial = "blue/Blue";
+                initial = "red/R";
                 setXPosition(1000);
                 setYPosition(50);
                 break;
             case 2:
-                initial = "red/R";
+                initial = "blue/Blue";
                 setXPosition(50);
                 setYPosition(500);
                 break;
@@ -53,68 +64,70 @@ public class Player extends BasicTile{
                 setYPosition(500);
                 break;
         }
-        URL bUp = getClass().getResource("../sprites/players/" + initial + "Back.gif");
-        URL bDown = getClass().getResource("../sprites/players/" + initial + "Front.gif");
-        URL bRight = getClass().getResource("../sprites/players/" + initial + "Right.gif");
-        URL bLeft = getClass().getResource("../sprites/players/" + initial + "Left.gif");
         URL bStand = getClass().getResource("../sprites/players/" + initial + "Stand.png");
         ImageIcon standSprite = new ImageIcon(bStand);
-        ImageIcon upSprite = new ImageIcon(bUp);
-        ImageIcon downSprite = new ImageIcon(bDown);
-        ImageIcon rightSprite = new ImageIcon(bRight);
-        ImageIcon leftSprite = new ImageIcon(bLeft);
-        setPlayerSprite(new JLabel(standSprite, JLabel.CENTER));
-        playerSprite.setMinimumSize(new Dimension(50, 50));
-        getFieldSprite().setLayout(new BorderLayout());
-        getFieldSprite().add(playerSprite);
+        setUpperSprite(new JLabel(standSprite, JLabel.CENTER));
     }
 
+    //Returns an object of type player
+
     @Override
-    public BasicTile clone(){
-        return new Player(field);
+    public BasicTile getCopy(){
+        return new Player(labyrinth);
     }
+
+    /*
+    Switches the player with the tile it is heading to, updates the position and loads the map again. If the variable
+    temp has a bomb in it, then it switches with the bomb instead of the tile thus placing the bomb
+     */
 
     public void playerMove(){
         if(!getDirection().equals("n")) {
-            int targetIndex = getTargetX() / getSize().width + getTargetY() / getSize().height * 22;
-            int originIndex = getXPosition() / getSize().width + getYPosition() / getSize().height * 22;
+            getUpperSprite().removeAll();
+            int targetIndex = targetX / getSize().width + targetY / getSize().height * 22;
+            int originIndex = xPosition / getSize().width + yPosition / getSize().height * 22;
             Component[] components = field.getComponents();
             field.removeAll();
-            Component temp = components[targetIndex];
-            components[targetIndex] = components[originIndex];
+            if(temp == null){
+                temp = components[targetIndex];
+            }
+            components[targetIndex] = this;
             components[originIndex] = temp;
             for (Component component : components) {
                 field.add(component);
             }
             field.validate();
-            setXPosition(getTargetX());
-            setYPosition(getTargetY());
+            setXPosition(targetX);
+            setYPosition(targetY);
+            temp = null;
         }
     }
+
+    //Gets the input from client through labyrinth and calculates wether it is possible to go there.
 
     public void setDirection(String direction){
         int width = getSize().width;
         int height = getSize().height;
-        setTargetY(getYPosition());
-        setTargetX(getXPosition());
+        setTargetY(yPosition);
+        setTargetX(xPosition);
         switch(direction){
             case "w":
-                setTargetY(getYPosition() - height);
+                setTargetY(yPosition - height);
                 break;
             case "a":
-                setTargetX(getXPosition() - width);
+                setTargetX(xPosition - width);
                 break;
             case "s":
-                setTargetY(getYPosition() + height);
+                setTargetY(yPosition + height);
                 break;
             case "d":
-                setTargetX(getXPosition() + width);
+                setTargetX(xPosition + width);
                 break;
             default:
                 this.direction = "n";
         }
         try{
-            int targetIndex = getTargetX() / getSize().width + getTargetY() / getSize().height * 22;
+            int targetIndex = targetX / getSize().width + targetY / getSize().height * 22;
             BasicTile targetTile = (BasicTile) field.getComponent(targetIndex);
             if(!targetTile.isSolid()){
                 this.direction = direction;
@@ -125,15 +138,49 @@ public class Player extends BasicTile{
             playerMove();
         }
         catch (Exception ignored){
-            System.out.println("error");
+            System.out.println("invalid position");
         }
     }
 
-    public void placeBomb(){ }
+    /*
+    If the player hasn't placed the maximum amount of bombs it can then it sets temp to bomb and temporarily adds a
+    bomb on top of the player until he moves
+     */
+
+    public void placeBomb(){
+        if (bombsPlaced < 1){
+            temp = new Bomb(field, this);
+            getUpperSprite().setLayout(new BorderLayout());
+            URL ground = getClass().getResource("../sprites/bomb/Bomb.png");
+            ImageIcon sprite = new ImageIcon(ground);
+            getUpperSprite().add(new JLabel(sprite, JLabel.CENTER));
+            bombsPlaced++;
+        }
+    }
+
+    //If the player who died is the same as the client then send a death message to the server
+
+    @Override
+    public void explode(int rotation, int range) {
+        super.explode(rotation, range);
+        if(labyrinth.getCLIENT_ID() == playerIndex){
+            labyrinth.getCLIENT().sendMessage("method;k;" + labyrinth.getCLIENT_ID());
+        }
+    }
+
+    //Replaces the tile it was on with an empty tile and sets himself as dead
 
     public void die(){
-        if (isDead = true) {
-
+        if (!isDead) {
+            setDead(true);
+            Component[] components = field.getComponents();
+            field.removeAll();
+            int originIndex = xPosition / getSize().width + yPosition / getSize().height * 22;
+            components[originIndex] = new EmptyTile();
+            for (Component component : components) {
+                field.add(component);
+            }
+            field.validate();
         }
     }
 }
