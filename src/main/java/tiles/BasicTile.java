@@ -89,7 +89,7 @@ public class BasicTile extends JPanel{
         Timer timer = new Timer(0, e -> {
             setFieldImagePath("../sprites/tiles/Grass1.png");
         });
-        timer.setInitialDelay(2000);
+        timer.setInitialDelay(1000);
         timer.setRepeats(false);
         timer.start();
     }

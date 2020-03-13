@@ -9,7 +9,7 @@ import java.net.Socket;
 public class ClientMain extends Thread {
 
     private Socket socket;
-    private String ip = "192.168.11.132"; // localhost
+    private String ip = "127.0.0.1"; // localhost
     private int port = 21;
     private DataOutputStream dOut = null;
     private DataInputStream dIn = null;

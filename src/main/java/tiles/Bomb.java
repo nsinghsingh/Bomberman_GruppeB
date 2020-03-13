@@ -1,5 +1,4 @@
 package tiles;
-import forms.Labyrinth;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -91,13 +90,14 @@ public class Bomb extends BasicTile{
             int position = xPosition + yPosition * 22;
             Component[] components = labyrinth.getComponents();
             labyrinth.removeAll();
-            components[position] = new EmptyTile().clone();
+            components[position] = new EmptyTile();
             for (Component component : components) {
                 labyrinth.add(component);
             }
             labyrinth.validate();
         });
-        counter.setInitialDelay(2000);
+        counter.setInitialDelay(1000);
+        counter.setRepeats(false);
         counter.start();
     }
 

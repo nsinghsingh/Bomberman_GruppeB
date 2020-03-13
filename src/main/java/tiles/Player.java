@@ -76,7 +76,7 @@ public class Player extends BasicTile{
             if(temp == null){
                 temp = components[targetIndex];
             }
-            components[targetIndex] = components[originIndex];
+            components[targetIndex] = this;
             components[originIndex] = temp;
             for (Component component : components) {
                 field.add(component);
@@ -121,7 +121,7 @@ public class Player extends BasicTile{
             playerMove();
         }
         catch (Exception ignored){
-            System.out.println("error");
+            System.out.println("invalid position");
         }
     }
 
